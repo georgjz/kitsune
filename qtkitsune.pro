@@ -19,11 +19,11 @@ UI_DIR = ui_generated/
 
 SOURCES += \
         src/Main.cpp \
-        src/MainWindow.cpp
+        src/Kitsune.cpp
 
 HEADERS += \
         src/Kitsune.hpp \
-        src/MainWindow.hpp
+        src/Kitsune.hpp
 
 FORMS += \
-        src/qtui/mainwindow.ui
+        src/qtui/kitsuneui.ui
