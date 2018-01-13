@@ -6,7 +6,7 @@
 TEMPLATE = app
 TARGET = Kitsune
 
-QT += core gui
+# QT += core gui
 CONFIG += c++11
 DEFINES += QT_DEPRECATED_WARNINGS
 

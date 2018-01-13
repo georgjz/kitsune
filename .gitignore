@@ -40,6 +40,7 @@
 # Qt/qmake specific
 [Mm]akefile
 *.stash
+*.user
 moc_generated/
 ui_generated/
 
