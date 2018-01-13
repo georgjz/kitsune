@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QImage>
+#include <QScrollBar>
 
 class QLabel;
 class QScrollArea;
@@ -23,11 +24,25 @@ public:
     bool loadFile(const QString &fileName);
 
 private slots:
-    void on_actionOpen_triggered();
+    void open();
+    void saveAs();
+    // void print();
+    void copy();
+    void paste();
+    void zoomIn();
+    void zoomOut();
+    void normalSize();
+    void fitToWindow();
+    void about();
 
 private:
-    // void createActions();
+    void connectActions();           // connect actions to slots
+    // void createMenus();
+    void updateActions();
+    bool saveFile(const QString &fileName);
     void setImage(const QImage &newImage);
+    void scaleImage(double factor);
+    void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
     QImage image;
     QLabel *imageLabel;

@@ -1,4 +1,5 @@
 #include <QtWidgets>
+#include <QAction>
 
 #include "Kitsune.hpp"
 #include "ui_kitsuneui.h"
@@ -22,7 +23,7 @@ Kitsune::Kitsune(QWidget *parent) :
     scrollArea->setVisible(scrollArea);
     setCentralWidget(scrollArea);
 
-    // createActions();
+    connectActions();
 
     resize(QGuiApplication::primaryScreen()->availableSize() * 3/5);
 }
@@ -32,34 +33,69 @@ Kitsune::~Kitsune()
     delete ui;
 }
 
+
+//------------------------------------------------------------------------------
 bool Kitsune::loadFile(const QString &fileName)
 {
     QImageReader reader(fileName);
+    reader.setAutoTransform(true);
     const QImage newImage = reader.read();
-    if(newImage.isNull())
-    {
+    if (newImage.isNull()) {
         QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
-                                 tr("Cannot load %1, %2").arg(QDir::toNativeSeperators(fileName), reader.errorString()));
+                                 tr("Cannot load %1: %2")
+                                 .arg(QDir::toNativeSeparators(fileName), reader.errorString()));
         return false;
     }
+
     setImage(newImage);
+
     setWindowFilePath(fileName);
 
-    const QString message = tr("Openend \"%1\", %2x%3, Depth: %4")
-                            .arg(QDir::toNativeSeperators(fileName)).arg(image.width()).arg(image.height()).arg(image.depth());
-                            ui->statusbar->showMessage(message);
+    const QString message = tr("Opened \"%1\", %2x%3, Depth: %4")
+        .arg(QDir::toNativeSeparators(fileName)).arg(image.width()).arg(image.height()).arg(image.depth());
+    statusBar()->showMessage(message);
     return true;
 }
-// void Kitsune::createActions()
-// {
-//     // openAct =
-// }
+
+//------------------------------------------------------------------------------
+void Kitsune::setImage(const QImage &newImage)
+{
+    image = newImage;
+    imageLabel->setPixmap(QPixmap::fromImage(image));
+
+    scaleFactor = 1.0;
+
+    scrollArea->setVisible(true);
+    // ui->printAct->setEnabled(true);
+    ui->fitToWindowAct->setEnabled(true);
+    updateActions();
+
+    if (!ui->fitToWindowAct->isChecked())
+        imageLabel->adjustSize();
+}
+
+//------------------------------------------------------------------------------
+bool Kitsune::saveFile(const QString &fileName)
+{
+    QImageWriter writer(fileName);
+
+    if (!writer.write(image)) {
+        QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
+                                 tr("Cannot write %1: %2")
+                                 .arg(QDir::toNativeSeparators(fileName)), writer.errorString());
+        return false;
+    }
+    const QString message = tr("Wrote \"%1\"").arg(QDir::toNativeSeparators(fileName));
+    statusBar()->showMessage(message);
+    return true;
+}
+
+//------------------------------------------------------------------------------
 static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
 {
-    static bool firstDialog { true };
+    static bool firstDialog = true;
 
-    if(firstDialog)
-    {
+    if (firstDialog) {
         firstDialog = false;
         const QStringList picturesLocations = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
         dialog.setDirectory(picturesLocations.isEmpty() ? QDir::currentPath() : picturesLocations.last());
@@ -69,22 +105,183 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
     const QByteArrayList supportedMimeTypes = acceptMode == QFileDialog::AcceptOpen
         ? QImageReader::supportedMimeTypes() : QImageWriter::supportedMimeTypes();
     foreach (const QByteArray &mimeTypeName, supportedMimeTypes)
-    {
         mimeTypeFilters.append(mimeTypeName);
-    }
     mimeTypeFilters.sort();
     dialog.setMimeTypeFilters(mimeTypeFilters);
-    dialog.selectMimeTypeFilter("image/png");
-    if(acceptMode == QFileDialog::AcceptSave)
-    {
-        dialog.setDefaultSuffix("png");
-    }
+    dialog.selectMimeTypeFilter("image/jpeg");
+    if (acceptMode == QFileDialog::AcceptSave)
+        dialog.setDefaultSuffix("jpg");
 }
 
-void Kitsune::on_actionOpen_triggered()
+//------------------------------------------------------------------------------
+// private members
+//------------------------------------------------------------------------------
+void Kitsune::open()
 {
     QFileDialog dialog(this, tr("Open File"));
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
 
-    while(dialog.exec() == QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {}
+    while (dialog.exec() == QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {}
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::saveAs()
+{
+    QFileDialog dialog(this, tr("Save File As"));
+    initializeImageFileDialog(dialog, QFileDialog::AcceptSave);
+
+    while (dialog.exec() == QDialog::Accepted && !saveFile(dialog.selectedFiles().first())) {}
+}
+
+//------------------------------------------------------------------------------
+// void Kitsune::print()
+// {
+//     Q_ASSERT(imageLabel->pixmap());
+// #if QT_CONFIG(printdialog)
+//
+//     QPrintDialog dialog(&printer, this);
+//
+//     if (dialog.exec()) {
+//         QPainter painter(&printer);
+//         QRect rect = painter.viewport();
+//         QSize size = imageLabel->pixmap()->size();
+//         size.scale(rect.size(), Qt::KeepAspectRatio);
+//         painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
+//         painter.setWindow(imageLabel->pixmap()->rect());
+//         painter.drawPixmap(0, 0, *imageLabel->pixmap());
+//     }
+// #endif
+// }
+
+//------------------------------------------------------------------------------
+void Kitsune::copy()
+{
+#ifndef QT_NO_CLIPBOARD
+    QGuiApplication::clipboard()->setImage(image);
+#endif // !QT_NO_CLIPBOARD
+}
+
+#ifndef QT_NO_CLIPBOARD
+static QImage clipboardImage()
+{
+    if (const QMimeData *mimeData = QGuiApplication::clipboard()->mimeData()) {
+        if (mimeData->hasImage()) {
+            const QImage image = qvariant_cast<QImage>(mimeData->imageData());
+            if (!image.isNull())
+                return image;
+        }
+    }
+    return QImage();
+}
+#endif // !QT_NO_CLIPBOARD
+
+//------------------------------------------------------------------------------
+void Kitsune::paste()
+{
+#ifndef QT_NO_CLIPBOARD
+    const QImage newImage = clipboardImage();
+    if (newImage.isNull()) {
+        statusBar()->showMessage(tr("No image in clipboard"));
+    } else {
+        setImage(newImage);
+        setWindowFilePath(QString());
+        const QString message = tr("Obtained image from clipboard, %1x%2, Depth: %3")
+            .arg(newImage.width()).arg(newImage.height()).arg(newImage.depth());
+        statusBar()->showMessage(message);
+    }
+#endif // !QT_NO_CLIPBOARD
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::zoomIn()
+{
+    scaleImage(1.25);
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::zoomOut()
+{
+    scaleImage(0.8);
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::normalSize()
+{
+    imageLabel->adjustSize();
+    scaleFactor = 1.0;
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::fitToWindow()
+{
+    bool fitToWindow = ui->fitToWindowAct->isChecked();
+    scrollArea->setWidgetResizable(fitToWindow);
+    if (!fitToWindow)
+        normalSize();
+    updateActions();
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::about()
+{
+    QMessageBox::about(this, tr("About Image Viewer"),
+            tr("<p>The <b>Image Viewer</b> example shows how to combine QLabel "
+               "and QScrollArea to display an image. QLabel is typically used "
+               "for displaying a text, but it can also display an image. "
+               "QScrollArea provides a scrolling view around another widget. "
+               "If the child widget exceeds the size of the frame, QScrollArea "
+               "automatically provides scroll bars. </p><p>The example "
+               "demonstrates how QLabel's ability to scale its contents "
+               "(QLabel::scaledContents), and QScrollArea's ability to "
+               "automatically resize its contents "
+               "(QScrollArea::widgetResizable), can be used to implement "
+               "zooming and scaling features. </p><p>In addition the example "
+               "shows how to use QPainter to print an image.</p>"));
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::connectActions()
+{
+    connect(ui->openAct, &QAction::triggered, this, &Kitsune::open);
+    connect(ui->saveAsAct, &QAction::triggered, this, &Kitsune::saveAs);
+    connect(ui->exitAct, &QAction::triggered, this, &QWidget::close);
+    connect(ui->copyAct, &QAction::triggered, this, &Kitsune::copy);
+    connect(ui->pasteAct, &QAction::triggered, this, &Kitsune::paste);
+    connect(ui->zoomInAct, &QAction::triggered, this, &Kitsune::zoomIn);
+    connect(ui->zoomOutAct, &QAction::triggered, this, &Kitsune::zoomOut);
+    connect(ui->normalSizeAct, &QAction::triggered, this, &Kitsune::normalSize);
+    connect(ui->fitToWindowAct, &QAction::triggered, this, &Kitsune::fitToWindow);
+    connect(ui->aboutAct, &QAction::triggered, this, &Kitsune::about);
+    connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::updateActions()
+{
+    ui->saveAsAct->setEnabled(!image.isNull());
+    ui->copyAct->setEnabled(!image.isNull());
+    ui->zoomInAct->setEnabled(!ui->fitToWindowAct->isChecked());
+    ui->zoomOutAct->setEnabled(!ui->fitToWindowAct->isChecked());
+    ui->normalSizeAct->setEnabled(!ui->fitToWindowAct->isChecked());
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::scaleImage(double factor)
+{
+    Q_ASSERT(imageLabel->pixmap());
+    scaleFactor *= factor;
+    imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
+
+    adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
+    adjustScrollBar(scrollArea->verticalScrollBar(), factor);
+
+    ui->zoomInAct->setEnabled(scaleFactor < 3.0);
+    ui->zoomOutAct->setEnabled(scaleFactor > 0.333);
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::adjustScrollBar(QScrollBar *scrollBar, double factor)
+{
+    scrollBar->setValue(int(factor * scrollBar->value()
+                            + ((factor - 1) * scrollBar->pageStep()/2)));
 }
