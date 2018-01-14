@@ -18,9 +18,10 @@ public:
     // image functions
     bool loadFile(const QString &fileName);
     void scaleImage(double factor);
+    bool processImage();        // will generate outputs
 
 protected:
-    void wheelEvent(QWheelEvent *event);
+    // void wheelEvent(QWheelEvent *event);
     // {
     //     // zoom scroll
     //     event->accept();
@@ -29,8 +30,9 @@ protected:
 private:
     void setImage(const QImage &newImage);
 
+    // bitformat
+    // tile size 
     QImage image;
-    // QLabel *imageLabel;
     double scaleFactor;
 };
 

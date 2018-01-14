@@ -85,6 +85,12 @@ void Kitsune::open()
 }
 
 //------------------------------------------------------------------------------
+void Kitsune::process()
+{
+    // call kitImage to process output
+    kitImage->processImage();
+}
+//------------------------------------------------------------------------------
 // void Kitsune::saveAs()
 // {
 //     QFileDialog dialog(this, tr("Save File As"));
@@ -133,17 +139,17 @@ void Kitsune::open()
 // }
 
 //------------------------------------------------------------------------------
-void Kitsune::zoomIn()
-{
-    kitImage->scaleImage(1.25);
-}
-
+// void Kitsune::zoomIn()
+// {
+//     kitImage->scaleImage(1.25);
+// }
+//
 //------------------------------------------------------------------------------
-void Kitsune::zoomOut()
-{
-    kitImage->scaleImage(0.8);
-}
-
+// void Kitsune::zoomOut()
+// {
+//     kitImage->scaleImage(0.8);
+// }
+//
 //------------------------------------------------------------------------------
 // void Kitsune::normalSize()
 // {
@@ -175,16 +181,17 @@ void Kitsune::about()
 void Kitsune::connectActions()
 {
     connect(ui->openAct, &QAction::triggered, this, &Kitsune::open);
+    connect(ui->processAct, &QAction::triggered, this, &Kitsune::process);
     // connect(ui->saveAsAct, &QAction::triggered, this, &Kitsune::saveAs);
-    // connect(ui->exitAct, &QAction::triggered, this, &QWidget::close);
+    connect(ui->exitAct, &QAction::triggered, this, &QWidget::close);
     // connect(ui->copyAct, &QAction::triggered, this, &Kitsune::copy);
     // connect(ui->pasteAct, &QAction::triggered, this, &Kitsune::paste);
-    connect(ui->zoomInAct, &QAction::triggered, this, &Kitsune::zoomIn);
-    connect(ui->zoomOutAct, &QAction::triggered, this, &Kitsune::zoomOut);
+    // connect(ui->zoomInAct, &QAction::triggered, this, &Kitsune::zoomIn);
+    // connect(ui->zoomOutAct, &QAction::triggered, this, &Kitsune::zoomOut);
     // connect(ui->normalSizeAct, &QAction::triggered, this, &Kitsune::normalSize);
     // connect(ui->fitToWindowAct, &QAction::triggered, this, &Kitsune::fitToWindow);
     connect(ui->aboutAct, &QAction::triggered, this, &Kitsune::about);
-    // connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);
+    connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);
 }
 
 //------------------------------------------------------------------------------

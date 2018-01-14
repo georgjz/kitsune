@@ -1,4 +1,5 @@
 #include <QtWidgets>
+#include <fstream>
 
 #include "KitsuneImage.hpp"
 
@@ -49,11 +50,82 @@ void KitsuneImage::scaleImage(double factor)
 }
 
 //------------------------------------------------------------------------------
-void KitsuneImage::wheelEvent(QWheelEvent *event)
+bool KitsuneImage::processImage()
 {
-    // zoom scroll
-    event->accept();
+    // this is where the magic happens...
+    // TODO palette output
+    // create bitplanes
+    // create bitplanes output file
+    std::ofstream bitplanesFile;
+    // TODO dynamic file name
+    bitplanesFile.open("KitsuneProcesOutput.vra", std::ios::binary | std::ios::out);
+    bitplanesFile.seekp(0);
+
+        // TODO: modulize in function
+        // bitplanes that will hold data
+    uint8_t bitplane0{0}, bitplane1{0}, bitplane2{0}, bitplane3{0};
+    uint8_t yTilesCount{static_cast<uint8_t>(image.width() >> 3)},
+            xTilesCount{static_cast<uint8_t>(image.height() >> 3)};
+    uint16_t tilesCount{static_cast<uint16_t>(xTilesCount * yTilesCount)};
+    uint8_t xTile{0}, yTile{0};
+
+    for(auto tile = 0; tile < tilesCount; ++tile)
+    {
+        for(auto y = 0; y < 8; ++y)
+        {
+            for(auto x = 0; x < 8; ++x)
+            {
+                uint8_t bit = 0;
+                // uint8_t index = colorIndexMap[8*xTile + x][8*yTile + y];
+                uint8_t index = image.colorTable().indexOf(image.pixel(8*xTile + x, 8*yTile + y));
+                bit = index & 1;
+                bitplane0 |= (bit << (7 - x));
+
+                index >>= 1;
+                bit = index & 1;
+                bitplane1 |= (bit << (7 - x));
+
+                index >>= 1;
+                bit = index & 1;
+                bitplane2 |= (bit << (7 - x));
+
+                index >>= 1;
+                bit = index & 1;
+                bitplane3 |= (bit << (7 - x));
+            } // x loop
+            // write bitplane line to output file
+            bitplanesFile.seekp(32*tile + 2*y);
+            bitplanesFile << bitplane0;
+            bitplanesFile.seekp(32*tile + 2*y + 1);
+            bitplanesFile << bitplane1;
+            bitplanesFile.seekp(32*tile + (2*y + 16));
+            bitplanesFile << bitplane2;
+            bitplanesFile.seekp(32*tile + (2*y + 16) + 1);
+            bitplanesFile << bitplane3;
+
+            // reset bitplanes
+            bitplane0 &= 0;
+            bitplane1 &= 0;
+            bitplane2 &= 0;
+            bitplane3 &= 0;
+        } // y loop
+        ++xTile;
+        if(xTile >= xTilesCount)
+        {
+            xTile = 0;              // reset counter
+            ++yTile;
+            if(yTile >= yTilesCount) break;
+        }
+    } // tile loop
+
+    return true;  // as break point, lulz
 }
+//------------------------------------------------------------------------------
+// void KitsuneImage::wheelEvent(QWheelEvent *event)
+// {
+//     // zoom scroll
+//     event->accept();
+// }
 
 //------------------------------------------------------------------------------
 //  private member functions
@@ -64,10 +136,5 @@ void KitsuneImage::setImage(const QImage &newImage)
     setPixmap(QPixmap::fromImage(image));
     scaleFactor = 1.0;
 
-    // // DEBUG
-    // QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
-    //                              tr("sizeHint() %1 x %2")
-    //                              .arg(sizeHint().rwidth(), sizeHint().rheight()));
-    // // DEBUG
     adjustSize();
 }

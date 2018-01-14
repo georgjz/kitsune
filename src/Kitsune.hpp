@@ -25,15 +25,14 @@ public:
     explicit Kitsune(QWidget *parent = 0);
     ~Kitsune();
 
-    // bool loadFile(const QString &fileName);
-
 private slots:
     void open();
+    void process();
     // void saveAs();
     // void copy();
     // void paste();
-    void zoomIn();
-    void zoomOut();
+    // void zoomIn();
+    // void zoomOut();
     // void normalSize();
     // void fitToWindow();
     void about();
@@ -42,7 +41,6 @@ private:
     void connectActions();           // connect actions to slots
     // void updateActions();
     bool saveFile(const QString &fileName);
-    // void setImage(const QImage &newImage);
     void scaleImage(double factor);
     // void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
