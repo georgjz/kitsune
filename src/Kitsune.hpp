@@ -25,13 +25,13 @@ public:
 
 private slots:
     void open();
-    void saveAs();
-    void copy();
-    void paste();
-    void zoomIn();
-    void zoomOut();
-    void normalSize();
-    void fitToWindow();
+    // void saveAs();
+    // void copy();
+    // void paste();
+    // void zoomIn();
+    // void zoomOut();
+    // void normalSize();
+    // void fitToWindow();
     void about();
 
 private:
