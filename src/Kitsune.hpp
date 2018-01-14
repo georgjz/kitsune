@@ -26,7 +26,6 @@ public:
 private slots:
     void open();
     void saveAs();
-    // void print();
     void copy();
     void paste();
     void zoomIn();
@@ -37,7 +36,6 @@ private slots:
 
 private:
     void connectActions();           // connect actions to slots
-    // void createMenus();
     void updateActions();
     bool saveFile(const QString &fileName);
     void setImage(const QImage &newImage);

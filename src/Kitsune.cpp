@@ -13,14 +13,19 @@ Kitsune::Kitsune(QWidget *parent) :
 {
     // set up UI. duh.
     ui->setupUi(this);
-    // set image properties
-    imageLabel->setBackgroundRole(QPalette::Base);
+    // set QLabel background to dark
+    imageLabel->setBackgroundRole(QPalette::Midlight);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
     scrollArea->setBackgroundRole(QPalette::Dark);
     scrollArea->setWidget(imageLabel);
     scrollArea->setVisible(scrollArea);
+    // move child/QLabel to center
+    scrollArea->widget()->setGeometry( (scrollArea->width() - scrollArea->widget()->width()) / 2,
+                                       (scrollArea->height() - scrollArea->widget()->height()) / 2,
+                                        scrollArea->widget()->width(),
+                                        scrollArea->widget()->height() );
     setCentralWidget(scrollArea);
 
     connectActions();
@@ -32,7 +37,6 @@ Kitsune::~Kitsune()
 {
     delete ui;
 }
-
 
 //------------------------------------------------------------------------------
 bool Kitsune::loadFile(const QString &fileName)
@@ -134,26 +138,6 @@ void Kitsune::saveAs()
 }
 
 //------------------------------------------------------------------------------
-// void Kitsune::print()
-// {
-//     Q_ASSERT(imageLabel->pixmap());
-// #if QT_CONFIG(printdialog)
-//
-//     QPrintDialog dialog(&printer, this);
-//
-//     if (dialog.exec()) {
-//         QPainter painter(&printer);
-//         QRect rect = painter.viewport();
-//         QSize size = imageLabel->pixmap()->size();
-//         size.scale(rect.size(), Qt::KeepAspectRatio);
-//         painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-//         painter.setWindow(imageLabel->pixmap()->rect());
-//         painter.drawPixmap(0, 0, *imageLabel->pixmap());
-//     }
-// #endif
-// }
-
-//------------------------------------------------------------------------------
 void Kitsune::copy()
 {
 #ifndef QT_NO_CLIPBOARD
@@ -224,19 +208,11 @@ void Kitsune::fitToWindow()
 //------------------------------------------------------------------------------
 void Kitsune::about()
 {
-    QMessageBox::about(this, tr("About Image Viewer"),
-            tr("<p>The <b>Image Viewer</b> example shows how to combine QLabel "
-               "and QScrollArea to display an image. QLabel is typically used "
-               "for displaying a text, but it can also display an image. "
-               "QScrollArea provides a scrolling view around another widget. "
-               "If the child widget exceeds the size of the frame, QScrollArea "
-               "automatically provides scroll bars. </p><p>The example "
-               "demonstrates how QLabel's ability to scale its contents "
-               "(QLabel::scaledContents), and QScrollArea's ability to "
-               "automatically resize its contents "
-               "(QScrollArea::widgetResizable), can be used to implement "
-               "zooming and scaling features. </p><p>In addition the example "
-               "shows how to use QPainter to print an image.</p>"));
+    QMessageBox::about(this, tr("About Kitsune"),
+            tr("<p>Kitsune 0.2-prealpha</p> "
+               "<p>Pixel Graphic and Tilemap Tool for SNES Developers</p>"
+               "<p> {license}</p> "
+               "<p>Copyright (C) 2018 Georg Ziegler</p>"));
 }
 
 //------------------------------------------------------------------------------
