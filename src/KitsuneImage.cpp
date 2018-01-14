@@ -8,8 +8,6 @@ KitsuneImage::KitsuneImage(QWidget *parent) :
 {
     setBackgroundRole(QPalette::Midlight);
     setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    // resize to available space of parrent scroll area
-    // resize(parent->availableSize());
     setScaledContents(true);
 }
 
@@ -63,9 +61,13 @@ void KitsuneImage::wheelEvent(QWheelEvent *event)
 void KitsuneImage::setImage(const QImage &newImage)
 {
     image = newImage;
-    // imageLabel->setPixmap(QPixmap::fromImage(image));
     setPixmap(QPixmap::fromImage(image));
-    // scrollArea->setVisible(true);
-    // imageLabel->adjustSize();
+    scaleFactor = 1.0;
+
+    // // DEBUG
+    // QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
+    //                              tr("sizeHint() %1 x %2")
+    //                              .arg(sizeHint().rwidth(), sizeHint().rheight()));
+    // // DEBUG
     adjustSize();
 }

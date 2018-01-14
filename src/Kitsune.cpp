@@ -16,13 +16,14 @@ Kitsune::Kitsune(QWidget *parent) :
     ui->setupUi(this);
     // set up scrollArea
     scrollArea->setBackgroundRole(QPalette::Dark);
+    scrollArea->setWidget(kitImage);
     scrollArea->setVisible(false);
     scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     setCentralWidget(scrollArea);
 
     connectActions();
 
-    // resize(QGuiApplication::primaryScreen()->availableSize() * 3/5);
+    resize(QGuiApplication::primaryScreen()->availableSize() * 3/5);
 }
 
 Kitsune::~Kitsune()
@@ -78,9 +79,8 @@ void Kitsune::open()
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
 
     while (dialog.exec() == QDialog::Accepted && !kitImage->loadFile(dialog.selectedFiles().first())) {}
-    // set loaded image as scroll area widget, make scroll area visible
-    // scrollArea->setWidget(kitImage->getImageLabel());
-    scrollArea->setWidget(kitImage);
+    // make scroll area visible
+    // scrollArea->setWidget(kitImage); // BUG
     scrollArea->setVisible(true);
 }
 
