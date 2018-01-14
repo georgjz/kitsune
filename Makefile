@@ -51,10 +51,14 @@ OBJECTS_DIR   = obj/
 ####### Files
 
 SOURCES       = src/Main.cpp \
-		src/Kitsune.cpp moc_generated/moc_Kitsune.cpp
+		src/Kitsune.cpp \
+		src/KitsuneImage.cpp moc_generated/moc_Kitsune.cpp \
+		moc_generated/moc_KitsuneImage.cpp
 OBJECTS       = obj/Main.o \
 		obj/Kitsune.o \
-		obj/moc_Kitsune.o
+		obj/KitsuneImage.o \
+		obj/moc_Kitsune.o \
+		obj/moc_KitsuneImage.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -243,8 +247,10 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		qtkitsune.pro src/Kitsune.hpp \
-		src/Kitsune.hpp src/Main.cpp \
-		src/Kitsune.cpp
+		src/Kitsune.hpp \
+		src/KitsuneImage.hpp src/Main.cpp \
+		src/Kitsune.cpp \
+		src/KitsuneImage.cpp
 QMAKE_TARGET  = Kitsune
 DESTDIR       = build/
 TARGET        = build/Kitsune
@@ -655,8 +661,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/Kitsune.hpp src/Kitsune.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/Main.cpp src/Kitsune.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/Kitsune.hpp src/Kitsune.hpp src/KitsuneImage.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/Main.cpp src/Kitsune.cpp src/KitsuneImage.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents src/qtui/kitsuneui.ui $(DISTDIR)/
 
 
@@ -689,18 +695,25 @@ compiler_moc_predefs_clean:
 moc_generated/moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt -std=gnu++11 -Wall -W -dM -E -o moc_generated/moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_generated/moc_Kitsune.cpp moc_generated/moc_Kitsune.cpp
+compiler_moc_header_make_all: moc_generated/moc_Kitsune.cpp moc_generated/moc_Kitsune.cpp moc_generated/moc_KitsuneImage.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_generated/moc_Kitsune.cpp moc_generated/moc_Kitsune.cpp
-moc_generated/moc_Kitsune.cpp: src/Kitsune.hpp \
+	-$(DEL_FILE) moc_generated/moc_Kitsune.cpp moc_generated/moc_Kitsune.cpp moc_generated/moc_KitsuneImage.cpp
+moc_generated/moc_Kitsune.cpp: src/KitsuneImage.hpp \
+		src/Kitsune.hpp \
 		moc_generated/moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include moc_generated//moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/georg/code/kitsune -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include src/Kitsune.hpp -o moc_generated/moc_Kitsune.cpp
 
-moc_generated/moc_Kitsune.cpp: src/Kitsune.hpp \
+moc_generated/moc_Kitsune.cpp: src/KitsuneImage.hpp \
+		src/Kitsune.hpp \
 		moc_generated/moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include moc_generated//moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/georg/code/kitsune -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include src/Kitsune.hpp -o moc_generated/moc_Kitsune.cpp
+
+moc_generated/moc_KitsuneImage.cpp: src/KitsuneImage.hpp \
+		moc_generated/moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include moc_generated//moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/georg/code/kitsune -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include src/KitsuneImage.hpp -o moc_generated/moc_KitsuneImage.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -723,15 +736,23 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-obj/Main.o: src/Main.cpp src/Kitsune.hpp
+obj/Main.o: src/Main.cpp src/Kitsune.hpp \
+		src/KitsuneImage.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Main.o src/Main.cpp
 
 obj/Kitsune.o: src/Kitsune.cpp src/Kitsune.hpp \
+		src/KitsuneImage.hpp \
 		ui_generated/ui_kitsuneui.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Kitsune.o src/Kitsune.cpp
 
+obj/KitsuneImage.o: src/KitsuneImage.cpp src/KitsuneImage.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/KitsuneImage.o src/KitsuneImage.cpp
+
 obj/moc_Kitsune.o: moc_generated/moc_Kitsune.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_Kitsune.o moc_generated/moc_Kitsune.cpp
+
+obj/moc_KitsuneImage.o: moc_generated/moc_KitsuneImage.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_KitsuneImage.o moc_generated/moc_KitsuneImage.cpp
 
 ####### Install
 

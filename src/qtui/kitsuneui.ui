@@ -33,6 +33,9 @@
     <addaction name="exitAct"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>&amp;Edit</string>
     </property>
@@ -40,11 +43,12 @@
     <addaction name="pasteAct"/>
    </widget>
    <widget class="QMenu" name="menuView">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>&amp;View</string>
     </property>
-    <addaction name="zoomInAct"/>
-    <addaction name="zoomOutAct"/>
     <addaction name="normalSizeAct"/>
     <addaction name="separator"/>
     <addaction name="fitToWindowAct"/>
