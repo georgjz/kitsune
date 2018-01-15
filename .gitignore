@@ -37,6 +37,13 @@
 *.jpg
 *.pal
 
+# Qt/qmake specific
+[Mm]akefile
+*.stash
+*.user
+moc_generated/
+ui_generated/
+
 # Build results
 [Bb]uild/
 [Dd]ebug/
