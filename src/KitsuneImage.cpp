@@ -21,6 +21,9 @@ KitsuneImage::~KitsuneImage()
 //------------------------------------------------------------------------------
 bool KitsuneImage::loadFile(const QString &fileName)
 {
+    // preserve file name
+    this->fileName = fileName;
+
     QImageReader reader(fileName);
     reader.setAutoTransform(true);
     const QImage newImage = reader.read();
@@ -54,15 +57,33 @@ bool KitsuneImage::processImage()
 {
     // this is where the magic happens...
     // TODO palette output
+    QString croppedFileName { fileName.section(".",0,0) };
+
+    std::ofstream paletteFile;
+    paletteFile.open(croppedFileName.toStdString()+".pal", std::ios::binary | std::ios::out);
+    paletteFile.seekp(0);
+
+    // QVector<QRgb> colorTable { image.colorTable() };
+    for(auto color : image.colorTable())
+    {
+        uint16_t colorR = qRed(color);
+        uint16_t colorG = qGreen(color);
+        uint16_t colorB = qBlue(color);
+        uint16_t colorBGR555 = ((colorB & 0xfff8) << 7) |
+                               ((colorG & 0xfff8) << 2) |
+                               ((colorR & 0xfff8) >> 3);
+        colorBGR555 &= 0x7fff;
+        uint8_t lowerByte   = colorBGR555 & 0x00ff;
+        uint8_t higherByte  = colorBGR555 >> 8;
+        paletteFile << lowerByte;
+        paletteFile << higherByte;
+    }
     // create bitplanes
     // create bitplanes output file
     std::ofstream bitplanesFile;
-    // TODO dynamic file name
-    bitplanesFile.open("KitsuneProcesOutput.vra", std::ios::binary | std::ios::out);
+    bitplanesFile.open(croppedFileName.toStdString() + ".vra", std::ios::binary | std::ios::out);
     bitplanesFile.seekp(0);
 
-        // TODO: modulize in function
-        // bitplanes that will hold data
     uint8_t bitplane0{0}, bitplane1{0}, bitplane2{0}, bitplane3{0};
     uint8_t yTilesCount{static_cast<uint8_t>(image.width() >> 3)},
             xTilesCount{static_cast<uint8_t>(image.height() >> 3)};
@@ -117,15 +138,12 @@ bool KitsuneImage::processImage()
             if(yTile >= yTilesCount) break;
         }
     } // tile loop
+    // close files
+    paletteFile.close();
+    bitplanesFile.close();
 
     return true;  // as break point, lulz
 }
-//------------------------------------------------------------------------------
-// void KitsuneImage::wheelEvent(QWheelEvent *event)
-// {
-//     // zoom scroll
-//     event->accept();
-// }
 
 //------------------------------------------------------------------------------
 //  private member functions

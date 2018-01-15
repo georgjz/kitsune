@@ -9,8 +9,6 @@
 
 #include "KitsuneImage.hpp"
 
-// class QLabel;
-// class QScrollArea;
 
 namespace Ui
 {
@@ -28,13 +26,6 @@ public:
 private slots:
     void open();
     void process();
-    // void saveAs();
-    // void copy();
-    // void paste();
-    // void zoomIn();
-    // void zoomOut();
-    // void normalSize();
-    // void fitToWindow();
     void about();
 
 private:
@@ -42,7 +33,6 @@ private:
     // void updateActions();
     bool saveFile(const QString &fileName);
     void scaleImage(double factor);
-    // void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
     KitsuneImage *kitImage;
     QScrollArea *scrollArea;

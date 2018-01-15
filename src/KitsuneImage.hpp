@@ -4,6 +4,9 @@
 #include <QImage>
 #include <QLabel>
 
+enum class BitFormats { _2bpp, _4bpp, _8bpp };
+enum class TileSizes { _8by8, _16by16, _32by32 };
+
 class KitsuneImage : public QLabel
 {
     Q_OBJECT
@@ -12,26 +15,21 @@ public:
     explicit KitsuneImage(QWidget *parent = 0);
     ~KitsuneImage();
 
-    // getter and setter
-    // QLabel* getImageLabel() { return imageLabel; }
-
     // image functions
     bool loadFile(const QString &fileName);
     void scaleImage(double factor);
     bool processImage();        // will generate outputs
 
-protected:
-    // void wheelEvent(QWheelEvent *event);
-    // {
-    //     // zoom scroll
-    //     event->accept();
-    // }
+// private slots:
+//     void setBitFormat(BitFormats bitFormat);
+//     void setTileSize(TileSizes tileSize);
 
 private:
     void setImage(const QImage &newImage);
 
-    // bitformat
-    // tile size 
+    BitFormats bitFormat;
+    TileSizes tileSize;
+    QString fileName;
     QImage image;
     double scaleFactor;
 };
