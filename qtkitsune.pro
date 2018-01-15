@@ -20,12 +20,14 @@ UI_DIR = ui_generated/
 SOURCES += \
         src/Main.cpp \
         src/Kitsune.cpp \
-        src/KitsuneImage.cpp
+        src/KitsuneImage.cpp \
+        src/KitsuneTileData.cpp
 
 HEADERS += \
         src/Kitsune.hpp \
         src/Kitsune.hpp \
-        src/KitsuneImage.hpp
+        src/KitsuneImage.hpp \
+        src/KitsuneTileData.hpp
 
 FORMS += \
         src/qtui/kitsuneui.ui

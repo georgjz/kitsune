@@ -1,5 +1,4 @@
 #include <QtWidgets>
-#include <QAction>
 
 #include "Kitsune.hpp"
 #include "KitsuneImage.hpp"
@@ -7,6 +6,7 @@
 
 Kitsune::Kitsune(QWidget *parent) :
     QMainWindow(parent),
+    tileData(new KitsuneTileData),
     kitImage(new KitsuneImage),
     scrollArea(new QScrollArea),
     scaleFactor(1.0f),
@@ -36,6 +36,7 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 {
     static bool firstDialog = true;
 
+    // set standard path to pictures location, else to execution path
     if (firstDialog) {
         firstDialog = false;
         const QStringList picturesLocations = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
@@ -43,10 +44,13 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
     }
 
     QStringList mimeTypeFilters;
-    const QByteArrayList supportedMimeTypes = acceptMode == QFileDialog::AcceptOpen
+    const QByteArrayList supportedMimeTypes =
+        acceptMode == QFileDialog::AcceptOpen
         ? QImageReader::supportedMimeTypes() : QImageWriter::supportedMimeTypes();
+
     foreach (const QByteArray &mimeTypeName, supportedMimeTypes)
         mimeTypeFilters.append(mimeTypeName);
+
     mimeTypeFilters.sort();
     dialog.setMimeTypeFilters(mimeTypeFilters);
     dialog.selectMimeTypeFilter("image/png");
@@ -57,20 +61,32 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 //------------------------------------------------------------------------------
 // private members
 //------------------------------------------------------------------------------
-void Kitsune::open()
+void Kitsune::openImage()
 {
     QFileDialog dialog(this, tr("Open File"));
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
 
     while (dialog.exec() == QDialog::Accepted && !kitImage->loadFile(dialog.selectedFiles().first())) {}
+
     scrollArea->setVisible(true);
 }
 
 //------------------------------------------------------------------------------
-void Kitsune::process()
+void Kitsune::saveAsImage()
 {
-    // call kitImage to process output
-    kitImage->processImage();
+    kitImage->saveFile(QFileDialog::getSaveFileName(this, tr("Save File As"), ""));
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::exportPalette()
+{
+    tileData->exportPalette(kitImage->getImage().colorTable());
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::exportTileSet()
+{
+    tileData->exportTileSet(kitImage->getImage());
 }
 
 //------------------------------------------------------------------------------
@@ -86,8 +102,10 @@ void Kitsune::about()
 //------------------------------------------------------------------------------
 void Kitsune::connectActions()
 {
-    connect(ui->openAct, &QAction::triggered, this, &Kitsune::open);
-    connect(ui->processAct, &QAction::triggered, this, &Kitsune::process);
+    connect(ui->openAct, &QAction::triggered, this, &Kitsune::openImage);
+    connect(ui->saveAsAct, &QAction::triggered, this, &Kitsune::saveAsImage);
+    connect(ui->expPaletteAct, &QAction::triggered, this, &Kitsune::exportPalette);
+    connect(ui->expTileSetAct, &QAction::triggered, this, &Kitsune::exportTileSet);
     connect(ui->exitAct, &QAction::triggered, this, &QWidget::close);
     connect(ui->aboutAct, &QAction::triggered, this, &Kitsune::about);
     connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);

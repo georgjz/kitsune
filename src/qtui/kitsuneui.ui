@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Kitsune - preAlpha</string>
+   <string>Kitsune v0.2-preAlpha</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -28,17 +28,19 @@
      <string>&amp;File</string>
     </property>
     <addaction name="openAct"/>
+    <addaction name="saveAsAct"/>
     <addaction name="separator"/>
     <addaction name="exitAct"/>
    </widget>
-   <widget class="QMenu" name="menuEdit">
+   <widget class="QMenu" name="menuImage">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="title">
-     <string>&amp;Edit</string>
+     <string>&amp;Image</string>
     </property>
-    <addaction name="processAct"/>
+    <addaction name="expPaletteAct"/>
+    <addaction name="expTileSetAct"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -48,13 +50,13 @@
     <addaction name="aboutQtAct"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuEdit"/>
+   <addaction name="menuImage"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="openAct">
    <property name="text">
-    <string>&amp;Open</string>
+    <string>&amp;Open...</string>
    </property>
   </action>
   <action name="exitAct">
@@ -72,9 +74,19 @@
     <string>About &amp;Qt</string>
    </property>
   </action>
-  <action name="processAct">
+  <action name="saveAsAct">
    <property name="text">
-    <string>&amp;Process</string>
+    <string>Save &amp;As... </string>
+   </property>
+  </action>
+  <action name="expPaletteAct">
+   <property name="text">
+    <string>Export &amp;Palette</string>
+   </property>
+  </action>
+  <action name="expTileSetAct">
+   <property name="text">
+    <string>Export Tile &amp;Set</string>
    </property>
   </action>
  </widget>

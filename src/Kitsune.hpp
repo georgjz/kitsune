@@ -24,16 +24,17 @@ public:
     ~Kitsune();
 
 private slots:
-    void open();
-    void process();
+    void openImage();
+    void saveAsImage();
+    void exportPalette();
+    void exportTileSet();
     void about();
 
 private:
     void connectActions();           // connect actions to slots
-    // void updateActions();
-    bool saveFile(const QString &fileName);
     void scaleImage(double factor);
 
+    KitsuneTileData *tileData;
     KitsuneImage *kitImage;
     QScrollArea *scrollArea;
     double scaleFactor;
