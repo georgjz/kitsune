@@ -90,6 +90,24 @@ void Kitsune::exportTileSet()
 }
 
 //------------------------------------------------------------------------------
+void Kitsune::setBitFormat()
+{
+    if(QObject::sender()->objectName() == "_2bppAct")
+    {
+        ui->_2bppAct->setChecked(true);
+        ui->_4bppAct->setChecked(false);
+        tileData->setBitFormat(BitFormats::_2bpp);
+    }
+
+
+    if(QObject::sender()->objectName() == "_4bppAct")
+    {
+        ui->_2bppAct->setChecked(false);
+        ui->_4bppAct->setChecked(true);
+        tileData->setBitFormat(BitFormats::_4bpp);
+    }
+}
+//------------------------------------------------------------------------------
 void Kitsune::about()
 {
     QMessageBox::about(this, tr("About Kitsune"),
@@ -107,6 +125,8 @@ void Kitsune::connectActions()
     connect(ui->expPaletteAct, &QAction::triggered, this, &Kitsune::exportPalette);
     connect(ui->expTileSetAct, &QAction::triggered, this, &Kitsune::exportTileSet);
     connect(ui->exitAct, &QAction::triggered, this, &QWidget::close);
+    connect(ui->_2bppAct, &QAction::triggered, this, &Kitsune::setBitFormat);
+    connect(ui->_4bppAct, &QAction::triggered, this, &Kitsune::setBitFormat);
     connect(ui->aboutAct, &QAction::triggered, this, &Kitsune::about);
     connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);
 }

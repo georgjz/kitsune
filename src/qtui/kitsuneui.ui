@@ -49,8 +49,22 @@
     <addaction name="aboutAct"/>
     <addaction name="aboutQtAct"/>
    </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>&amp;Settings</string>
+    </property>
+    <widget class="QMenu" name="menuBit_Format">
+     <property name="title">
+      <string>Bit Format</string>
+     </property>
+     <addaction name="_2bppAct"/>
+     <addaction name="_4bppAct"/>
+    </widget>
+    <addaction name="menuBit_Format"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuImage"/>
+   <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -87,6 +101,25 @@
   <action name="expTileSetAct">
    <property name="text">
     <string>Export Tile &amp;Set</string>
+   </property>
+  </action>
+  <action name="_2bppAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>2 bpp</string>
+   </property>
+  </action>
+  <action name="_4bppAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>4 bpp</string>
    </property>
   </action>
  </widget>

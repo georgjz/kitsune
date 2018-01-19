@@ -8,6 +8,7 @@
 #include <QScrollBar>
 
 #include "KitsuneImage.hpp"
+#include "KitsuneTileData.hpp"
 
 
 namespace Ui
@@ -28,6 +29,7 @@ private slots:
     void saveAsImage();
     void exportPalette();
     void exportTileSet();
+    void setBitFormat();
     void about();
 
 private:
