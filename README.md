@@ -5,10 +5,15 @@ corresponding palette data. Kitsune uses Qt.
 
 ## Usage
 After compiling and starting Kitsune, use the File menu to open a file and
-the Image menu to export a Tileset. WARNING: As of now, the tile size is fixed
-to 8 by 8 pixels, and the bit format to 4bpp. This is preAlpha and should change
-soon.
+the Image menu to export a Tileset. The format can be switched in the
+Settings menu between 2bpp and 4bpp(8bpp implementation is missing as of
+yet).
 
 Note that this was written in a nightly session, so it is highly unoptimized
 and experimental. Use at own risk. Was successfully tested on Windows with Cgywin
 and Linux.
+
+## Compilation
+Run first `qmake` and then `make` to compile Kitsune. The executable is
+placed in the subdirectory `build`. There is no release build or automatic
+installation as of yet. You need to run it from the build directory.

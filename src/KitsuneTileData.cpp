@@ -73,6 +73,8 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
     uint16_t tilesCount{static_cast<uint16_t>(xTilesCount * yTilesCount)};
     uint8_t xTile{0}, yTile{0};
 
+    uint8_t offset = (bitFormat == BitFormats::_2bpp) ? 16 : 32;
+
     for(auto tile = 0; tile < tilesCount; ++tile)
     {
         for(auto y = 0; y < 8; ++y)
@@ -101,14 +103,14 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
             switch(bitFormat)
             {
                 case BitFormats::_4bpp:
-                    outputFile.seek(32*tile + (2*y + 16) + 1);
+                    outputFile.seek(offset*tile + (2*y + 16) + 1);
                     out << bitplane3;
-                    outputFile.seek(32*tile + (2*y + 16));
+                    outputFile.seek(offset*tile + (2*y + 16));
                     out << bitplane2;
                 case BitFormats::_2bpp:
-                    outputFile.seek(32*tile + 2*y + 1);
+                    outputFile.seek(offset*tile + 2*y + 1);
                     out << bitplane1;
-                    outputFile.seek(32*tile + 2*y);
+                    outputFile.seek(offset*tile + 2*y);
                     out << bitplane0;
             }
             // reset bitplanes
