@@ -68,8 +68,8 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
     QDataStream out(&outputFile);
 
     uint8_t bitplane0{0}, bitplane1{0}, bitplane2{0}, bitplane3{0};
-    uint8_t yTilesCount{static_cast<uint8_t>(image.width() >> 3)},
-            xTilesCount{static_cast<uint8_t>(image.height() >> 3)};
+    uint8_t xTilesCount{static_cast<uint8_t>(image.width() >> 3)},
+            yTilesCount{static_cast<uint8_t>(image.height() >> 3)};
     uint16_t tilesCount{static_cast<uint16_t>(xTilesCount * yTilesCount)};
     uint8_t xTile{0}, yTile{0};
 
