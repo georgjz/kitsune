@@ -8,7 +8,7 @@
   * Zoom
   * Pan/Scroll
 * Add support for exporting tile sets in additional Bit Formats
-  * 2bpp
+  * ~~2bpp~~
   * 8bpp
 * Fix Export Dialog
   * Remember last path
