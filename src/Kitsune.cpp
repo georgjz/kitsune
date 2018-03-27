@@ -6,8 +6,8 @@
 
 Kitsune::Kitsune(QWidget *parent) :
     QMainWindow(parent),
-    tileData(new KitsuneTileData),
-    kitImage(new KitsuneImage),
+    centralWidget(new QTabWidget),
+    tileData(new KitsuneTileData),      // helper class
     scrollArea(new QScrollArea),
     scaleFactor(1.0f),
     ui(new Ui::KitsuneUi)
@@ -15,11 +15,15 @@ Kitsune::Kitsune(QWidget *parent) :
     // set up UI. duh.
     ui->setupUi(this);
     // set up scrollArea
-    scrollArea->setBackgroundRole(QPalette::Dark);
-    scrollArea->setWidget(kitImage);
-    scrollArea->setVisible(false);
-    scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    setCentralWidget(scrollArea);
+    // scrollArea->setBackgroundRole(QPalette::Dark);
+    // scrollArea->setWidget(kitImage);
+    // scrollArea->setVisible(false);
+    // scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+    // !!!!!!!!!!!
+    setCentralWidget(centralWidget);
+    centralWidget->addTab(new QWidget(),"TAB 1");
+    centralWidget->addTab(new QWidget(),"TAB 2");
 
     connectActions();
 
@@ -63,30 +67,30 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 //------------------------------------------------------------------------------
 void Kitsune::openImage()
 {
-    QFileDialog dialog(this, tr("Open File"));
-    initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
-
-    while (dialog.exec() == QDialog::Accepted && !kitImage->loadFile(dialog.selectedFiles().first())) {}
-
-    scrollArea->setVisible(true);
+    // QFileDialog dialog(this, tr("Open File"));
+    // initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
+    //
+    // while (dialog.exec() == QDialog::Accepted && !kitImage->loadFile(dialog.selectedFiles().first())) {}
+    //
+    // scrollArea->setVisible(true);
 }
 
 //------------------------------------------------------------------------------
 void Kitsune::saveAsImage()
 {
-    kitImage->saveFile(QFileDialog::getSaveFileName(this, tr("Save File As"), ""));
+    // kitImage->saveFile(QFileDialog::getSaveFileName(this, tr("Save File As"), ""));
 }
 
 //------------------------------------------------------------------------------
 void Kitsune::exportPalette()
 {
-    tileData->exportPalette(kitImage->getImage().colorTable());
+    // tileData->exportPalette(kitImage->getImage().colorTable());
 }
 
 //------------------------------------------------------------------------------
 void Kitsune::exportTileSet()
 {
-    tileData->exportTileSet(kitImage->getImage());
+    // tileData->exportTileSet(kitImage->getImage());
 }
 
 //------------------------------------------------------------------------------

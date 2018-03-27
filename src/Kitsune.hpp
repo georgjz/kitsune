@@ -36,8 +36,9 @@ private:
     void connectActions();           // connect actions to slots
     void scaleImage(double factor);
 
+    QTabWidget *centralWidget;  // holds the image tabs
     KitsuneTileData *tileData;
-    KitsuneImage *kitImage;
+    // KitsuneImage *kitImage;
     QScrollArea *scrollArea;
     double scaleFactor;
 
