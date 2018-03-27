@@ -7,6 +7,8 @@
 #include <QScrollArea>
 #include <QScrollBar>
 
+#include <vector>
+
 #include "KitsuneImage.hpp"
 #include "KitsuneTileData.hpp"
 
@@ -36,10 +38,11 @@ private:
     void connectActions();           // connect actions to slots
     void scaleImage(double factor);
 
-    QTabWidget *centralWidget;  // holds the image tabs
+    // QWidget *centralWidget;     // holds the central widget
+    // QTabWidget *imageTabs;      // hols the image tabs
     KitsuneTileData *tileData;
     // KitsuneImage *kitImage;
-    QScrollArea *scrollArea;
+    // QScrollArea *scrollArea;
     double scaleFactor;
 
     Ui::KitsuneUi *ui;

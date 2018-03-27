@@ -2,7 +2,6 @@
 
 ### 0.3-Alpha
 * Change license to MIT
-* Multitap
 * Status bar shows last operation's result
 * Controls
   * Zoom

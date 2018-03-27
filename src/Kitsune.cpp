@@ -6,14 +6,18 @@
 
 Kitsune::Kitsune(QWidget *parent) :
     QMainWindow(parent),
-    centralWidget(new QTabWidget),
-    tileData(new KitsuneTileData),      // helper class
-    scrollArea(new QScrollArea),
+    tileData(new KitsuneTileData),                  // helper class
     scaleFactor(1.0f),
     ui(new Ui::KitsuneUi)
+    // imageTabs(new QTabWidget(this)),   // centralWidget is parent of imageTabs
+    // scrollArea(new QScrollArea),
 {
     // set up UI. duh.
     ui->setupUi(this);
+    this->setCentralWidget(ui->centralWidget);
+    ui->centralWidget->hide();
+    ui->imageTabs->addTab(new QWidget(),"TAB 1");
+    ui->imageTabs->addTab(new QWidget(),"TAB 2");
     // set up scrollArea
     // scrollArea->setBackgroundRole(QPalette::Dark);
     // scrollArea->setWidget(kitImage);
@@ -21,9 +25,11 @@ Kitsune::Kitsune(QWidget *parent) :
     // scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     // !!!!!!!!!!!
-    setCentralWidget(centralWidget);
-    centralWidget->addTab(new QWidget(),"TAB 1");
-    centralWidget->addTab(new QWidget(),"TAB 2");
+    // setCentralWidget(imageTabs);
+    // setCentralWidget(ui->centralWidget);
+    // imageTabs = new QTabWidget(ui->centralWidget);
+    // imageTabs->addTab(new QWidget(),"TAB 1");
+    // imageTabs->addTab(new QWidget(),"TAB 2");
 
     connectActions();
 
