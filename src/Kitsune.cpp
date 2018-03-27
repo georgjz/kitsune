@@ -1,12 +1,13 @@
 #include <QtWidgets>
 
 #include "Kitsune.hpp"
+#include "KitsuneTab.hpp"
 #include "KitsuneImage.hpp"
 #include "ui_kitsuneui.h"
 
 Kitsune::Kitsune(QWidget *parent) :
     QMainWindow(parent),
-    tileData(new KitsuneTileData),                  // helper class
+    tileData(new KitsuneTileData),      // helper class
     scaleFactor(1.0f),
     ui(new Ui::KitsuneUi)
     // imageTabs(new QTabWidget(this)),   // centralWidget is parent of imageTabs
@@ -14,10 +15,10 @@ Kitsune::Kitsune(QWidget *parent) :
 {
     // set up UI. duh.
     ui->setupUi(this);
-    this->setCentralWidget(ui->centralWidget);
+    this->setCentralWidget(ui->centralWidget);  // set central widget
     ui->centralWidget->hide();
-    ui->imageTabs->addTab(new QWidget(),"TAB 1");
-    ui->imageTabs->addTab(new QWidget(),"TAB 2");
+    // ui->imageTabs->addTab(new QWidget(),"TAB 1");
+    // ui->imageTabs->addTab(new QWidget(),"TAB 2");
     // set up scrollArea
     // scrollArea->setBackgroundRole(QPalette::Dark);
     // scrollArea->setWidget(kitImage);
@@ -73,6 +74,10 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 //------------------------------------------------------------------------------
 void Kitsune::openImage()
 {
+    // create new Tab
+    tabList << new KitsuneTab(this);
+    // get file name and open it
+    // check central widget, make visible
     // QFileDialog dialog(this, tr("Open File"));
     // initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
     //

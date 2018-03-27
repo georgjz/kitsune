@@ -4,12 +4,12 @@
 #include <QMainWindow>
 #include <QImage>
 #include <QLabel>
+#include <QList>
 #include <QScrollArea>
 #include <QScrollBar>
 
-#include <vector>
-
 #include "KitsuneImage.hpp"
+#include "KitsuneTab.hpp"
 #include "KitsuneTileData.hpp"
 
 
@@ -38,6 +38,7 @@ private:
     void connectActions();           // connect actions to slots
     void scaleImage(double factor);
 
+    QList<KitsuneTab*> tabList;
     // QWidget *centralWidget;     // holds the central widget
     // QTabWidget *imageTabs;      // hols the image tabs
     KitsuneTileData *tileData;

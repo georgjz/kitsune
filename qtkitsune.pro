@@ -21,12 +21,13 @@ SOURCES += \
         src/Main.cpp \
         src/Kitsune.cpp \
         src/KitsuneImage.cpp \
+        src/KitsuneTab.cpp \
         src/KitsuneTileData.cpp
 
 HEADERS += \
         src/Kitsune.hpp \
-        src/Kitsune.hpp \
         src/KitsuneImage.hpp \
+        src/KitsuneTab.hpp \
         src/KitsuneTileData.hpp
 
 FORMS += \
