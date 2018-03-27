@@ -13,6 +13,7 @@
 * Fix Export Dialog
   * Remember last path
   * Output file format selection work with .pal, .bin, and .map files
+* Reopen last opened file 
 
 ### 0.4-Alpha
 * Basic manual with sphinx; class and UI hierarchy
@@ -22,5 +23,6 @@
 * Property window/editor
 
 ## 0.5-Alpha
+* load TMX file
 * Tile Set Reducer
 * Tile Map Exporter (fixed size)

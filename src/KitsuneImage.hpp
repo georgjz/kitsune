@@ -28,6 +28,7 @@
 
 #include "KitsuneTileData.hpp"
 
+// TODO: Why QLabel?
 class KitsuneImage : public QLabel
 {
     Q_OBJECT
@@ -42,6 +43,7 @@ public:
     void scaleImage(double factor);
 
     QImage getImage() { return image; }
+    QString getFileName() { return fileName; }
 
 private:
     void setImage(const QImage &newImage);

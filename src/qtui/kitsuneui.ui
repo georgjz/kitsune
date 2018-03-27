@@ -13,14 +13,33 @@
   <property name="windowTitle">
    <string>Kitsune v0.2-preAlpha</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="imageTabs">
+      <property name="tabShape">
+       <enum>QTabWidget::Triangular</enum>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -55,7 +74,7 @@
     </property>
     <widget class="QMenu" name="menuBit_Format">
      <property name="title">
-      <string>Bit Format</string>
+      <string>&amp;Bit Format</string>
      </property>
      <addaction name="_2bppAct"/>
      <addaction name="_4bppAct"/>
@@ -108,7 +127,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>2 bpp</string>
+    <string>&amp;2 bpp</string>
    </property>
   </action>
   <action name="_4bppAct">
@@ -119,7 +138,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>4 bpp</string>
+    <string>&amp;4 bpp</string>
    </property>
   </action>
  </widget>

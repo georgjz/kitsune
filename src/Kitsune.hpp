@@ -26,10 +26,12 @@
 #include <QMainWindow>
 #include <QImage>
 #include <QLabel>
+#include <QList>
 #include <QScrollArea>
 #include <QScrollBar>
 
 #include "KitsuneImage.hpp"
+#include "KitsuneTab.hpp"
 #include "KitsuneTileData.hpp"
 
 
@@ -53,14 +55,16 @@ private slots:
     void exportTileSet();
     void setBitFormat();
     void about();
+    // tab functions
+    void closeTab(int tabIndex);    // close tab
+    void newTab(int tabIndex);      // switches focus to new tab
 
 private:
     void connectActions();           // connect actions to slots
     void scaleImage(double factor);
 
+    QList<KitsuneTab*> tabList;
     KitsuneTileData *tileData;
-    KitsuneImage *kitImage;
-    QScrollArea *scrollArea;
     double scaleFactor;
 
     Ui::KitsuneUi *ui;
