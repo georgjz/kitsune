@@ -17,20 +17,12 @@ public:
     explicit KitsuneTab(QWidget *parent = 0);
     ~KitsuneTab();
 
-    // image functions
-    // bool loadFile(const QString &fileName);
-    // bool saveFile(const QString &fileName);
-    // void scaleImage(double factor);
-    //
-    // QImage getImage() { return image; }
+    // tab functions
+    bool loadFile(const QString &fileName);
+    QString getFileName() { return tabContent->getFileName(); }
 
 private:
     KitsuneImage *tabContent;   // image shown in tab
-    // void setImage(const QImage &newImage);
-    //
-    // QString fileName;
-    // QImage image;
-    // double scaleFactor;
 };
 
 #endif /* KITSUNETAB_H */

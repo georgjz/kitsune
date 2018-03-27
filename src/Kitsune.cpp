@@ -25,13 +25,6 @@ Kitsune::Kitsune(QWidget *parent) :
     // scrollArea->setVisible(false);
     // scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    // !!!!!!!!!!!
-    // setCentralWidget(imageTabs);
-    // setCentralWidget(ui->centralWidget);
-    // imageTabs = new QTabWidget(ui->centralWidget);
-    // imageTabs->addTab(new QWidget(),"TAB 1");
-    // imageTabs->addTab(new QWidget(),"TAB 2");
-
     connectActions();
 
     resize(QGuiApplication::primaryScreen()->availableSize() * 3/5);
@@ -77,13 +70,17 @@ void Kitsune::openImage()
     // create new Tab
     tabList << new KitsuneTab(this);
     // get file name and open it
-    // check central widget, make visible
-    // QFileDialog dialog(this, tr("Open File"));
-    // initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
-    //
-    // while (dialog.exec() == QDialog::Accepted && !kitImage->loadFile(dialog.selectedFiles().first())) {}
-    //
-    // scrollArea->setVisible(true);
+    QFileDialog dialog(this, tr("Open File"));
+    initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
+
+    while (dialog.exec() == QDialog::Accepted && !tabList.last()->loadFile(dialog.selectedFiles().first())) {}
+
+    // make latest tab visible, change title
+    ui->imageTabs->insertTab(ui->imageTabs->currentIndex() + 1, // insert after current tab
+                             tabList.last(),                    // add newly opened tab
+                             tabList.last()->getFileName());    // tab text is file name
+    ui->imageTabs->setCurrentWidget(tabList.last());            // change focus to new tab
+    ui->centralWidget->show();                                  // make tab widget visible
 }
 
 //------------------------------------------------------------------------------
@@ -133,6 +130,18 @@ void Kitsune::about()
 }
 
 //------------------------------------------------------------------------------
+void Kitsune::closeTab(int tabIndex)
+{
+    ui->imageTabs->removeTab(tabIndex);
+}
+
+//------------------------------------------------------------------------------
+void Kitsune::newTab(int tabIndex)
+{
+    // ui->imageTabs->removeTab(tabIndex);
+}
+
+//------------------------------------------------------------------------------
 void Kitsune::connectActions()
 {
     connect(ui->openAct, &QAction::triggered, this, &Kitsune::openImage);
@@ -144,4 +153,5 @@ void Kitsune::connectActions()
     connect(ui->_4bppAct, &QAction::triggered, this, &Kitsune::setBitFormat);
     connect(ui->aboutAct, &QAction::triggered, this, &Kitsune::about);
     connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);
+    connect(ui->imageTabs, &QTabWidget::tabCloseRequested, this, &Kitsune::closeTab);
 }

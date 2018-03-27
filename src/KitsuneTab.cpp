@@ -7,9 +7,7 @@ KitsuneTab::KitsuneTab(QWidget *parent) :
     QScrollArea(parent)
     // scaleFactor(1.0)
 {
-    // setBackgroundRole(QPalette::Midlight);
-    // setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    // setScaledContents(true);
+    setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
 }
 
 //------------------------------------------------------------------------------
@@ -19,3 +17,9 @@ KitsuneTab::~KitsuneTab()
 }
 
 //------------------------------------------------------------------------------
+bool KitsuneTab::loadFile(const QString &fileName)
+{
+    tabContent = new KitsuneImage(this);    // create image object
+    setWidget(tabContent);
+    return tabContent->loadFile(fileName);  // load image
+}
