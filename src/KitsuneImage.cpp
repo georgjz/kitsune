@@ -46,10 +46,11 @@ KitsuneImage::KitsuneImage(QWidget *parent) :
 //------------------------------------------------------------------------------
 KitsuneImage::~KitsuneImage()
 {
-    // delete imageLabel;
+    // destructor
 }
 
 //------------------------------------------------------------------------------
+
 bool KitsuneImage::loadFile(const QString &fileName)
 {
     // preserve file name
@@ -67,13 +68,12 @@ bool KitsuneImage::loadFile(const QString &fileName)
 
     setImage(newImage);
 
-    // const QString message = tr("Opened \"%1\", %2x%3, Depth: %4")
-    //     .arg(QDir::toNativeSeparators(fileName)).arg(image.width()).arg(image.height()).arg(image.depth());
     // statusBar()->showMessage(message);
     return true;
 }
 
 //------------------------------------------------------------------------------
+
 bool KitsuneImage::saveFile(const QString &fileName)
 {
     QImageWriter writer(fileName);
@@ -87,10 +87,11 @@ bool KitsuneImage::saveFile(const QString &fileName)
     }
 
     // write to status bar
-
     return true;
 }
+
 //------------------------------------------------------------------------------
+
 void KitsuneImage::scaleImage(double factor)
 {
     Q_ASSERT(this->pixmap());

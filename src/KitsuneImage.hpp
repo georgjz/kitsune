@@ -28,7 +28,6 @@
 
 #include "KitsuneTileData.hpp"
 
-// TODO: Why QLabel?
 class KitsuneImage : public QLabel
 {
     Q_OBJECT

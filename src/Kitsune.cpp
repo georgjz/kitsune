@@ -32,20 +32,11 @@ Kitsune::Kitsune(QWidget *parent) :
     tileData(new KitsuneTileData),      // helper class
     scaleFactor(1.0f),
     ui(new Ui::KitsuneUi)
-    // imageTabs(new QTabWidget(this)),   // centralWidget is parent of imageTabs
-    // scrollArea(new QScrollArea),
 {
     // set up UI. duh.
     ui->setupUi(this);
     this->setCentralWidget(ui->centralWidget);  // set central widget
     ui->centralWidget->hide();
-    // ui->imageTabs->addTab(new QWidget(),"TAB 1");
-    // ui->imageTabs->addTab(new QWidget(),"TAB 2");
-    // set up scrollArea
-    // scrollArea->setBackgroundRole(QPalette::Dark);
-    // scrollArea->setWidget(kitImage);
-    // scrollArea->setVisible(false);
-    // scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     connectActions();
 
@@ -58,6 +49,7 @@ Kitsune::~Kitsune()
 }
 
 //------------------------------------------------------------------------------
+
 static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
 {
     static bool firstDialog = true;
@@ -106,12 +98,14 @@ void Kitsune::openImage()
 }
 
 //------------------------------------------------------------------------------
+
 void Kitsune::saveAsImage()
 {
     // kitImage->saveFile(QFileDialog::getSaveFileName(this, tr("Save File As"), ""));
 }
 
 //------------------------------------------------------------------------------
+
 void Kitsune::exportPalette()
 {
     // Get the current tab's image and export its palette
@@ -120,15 +114,16 @@ void Kitsune::exportPalette()
 }
 
 //------------------------------------------------------------------------------
+
 void Kitsune::exportTileSet()
 {
     // Get the current tab's image and export its tile set
-    // tileData->exportTileSet(kitImage->getImage());
     KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
     tileData->exportTileSet(image->getImage());
 }
 
 //------------------------------------------------------------------------------
+
 void Kitsune::setBitFormat()
 {
     if(QObject::sender()->objectName() == "_2bppAct")
@@ -146,7 +141,9 @@ void Kitsune::setBitFormat()
         tileData->setBitFormat(BitFormats::_4bpp);
     }
 }
+
 //------------------------------------------------------------------------------
+
 void Kitsune::about()
 {
     QMessageBox::about(this, tr("About Kitsune"),
@@ -157,18 +154,21 @@ void Kitsune::about()
 }
 
 //------------------------------------------------------------------------------
+
 void Kitsune::closeTab(int tabIndex)
 {
     ui->imageTabs->removeTab(tabIndex);
 }
 
 //------------------------------------------------------------------------------
+
 void Kitsune::newTab(int tabIndex)
 {
     // ui->imageTabs->removeTab(tabIndex);
 }
 
 //------------------------------------------------------------------------------
+
 void Kitsune::connectActions()
 {
     connect(ui->openAct, &QAction::triggered, this, &Kitsune::openImage);

@@ -30,7 +30,6 @@
 #include "KitsuneImage.hpp"
 #include "KitsuneTileData.hpp"
 
-// TODO: Why QLabel?
 class KitsuneTab : public QScrollArea
 {
     Q_OBJECT
