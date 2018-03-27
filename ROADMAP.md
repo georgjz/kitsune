@@ -21,5 +21,6 @@
 * Property window/editor
 
 ## 0.5-Alpha
+* load TMX file
 * Tile Set Reducer
 * Tile Map Exporter (fixed size)
