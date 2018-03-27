@@ -57,7 +57,6 @@ private slots:
     void about();
     // tab functions
     void closeTab(int tabIndex);    // close tab
-    void newTab(int tabIndex);      // switches focus to new tab
 
 private:
     void connectActions();           // connect actions to slots

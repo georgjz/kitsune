@@ -5,7 +5,7 @@ corresponding palette data. Kitsune uses Qt.
 
 ## Usage
 After compiling and starting Kitsune, use the File menu to open a file and
-the Image menu to export a Tileset. The format can be switched in the
+the Image menu to export a Tile Set. The format can be switched in the
 Settings menu between 2bpp and 4bpp(8bpp implementation is missing as of
 yet).
 
@@ -15,5 +15,6 @@ and Linux.
 
 ## Compilation
 Run first `qmake` and then `make` to compile Kitsune. The executable is
-placed in the subdirectory `build`. There is no release build or automatic
-installation as of yet. You need to run it from the build directory.
+placed in the subdirectory `build`. Optionally, you can use `make install` to
+add Kitsune to your system, but it is discouraged as of now. This software is
+still experimental.

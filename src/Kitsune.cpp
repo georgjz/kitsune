@@ -147,9 +147,16 @@ void Kitsune::setBitFormat()
 void Kitsune::about()
 {
     QMessageBox::about(this, tr("About Kitsune"),
-            tr("<p>Kitsune 0.2-prealpha</p> "
+            tr("<p>Kitsune 0.2.3-preAlpha</p> "
                "<p>Pixel Graphic and Tilemap Tool for SNES Developers</p>"
-               "<p>{license}</p> "
+               "<p>License: Permission is hereby granted, free of charge, to any person obtaining a copy "
+               "of this software and associated documentation files (the \"Software\"), to deal "
+               "in the Software without restriction, including without limitation the rights "
+               "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell "
+               "copies of the Software, and to permit persons to whom the Software is "
+               "furnished to do so, subject to the following conditions:</p>"
+               "<p>The above copyright notice and this permission notice shall be included in all "
+               "copies or substantial portions of the Software.</p>"
                "<p>Copyright (C) 2018 Georg Ziegler</p>"));
 }
 
@@ -158,13 +165,6 @@ void Kitsune::about()
 void Kitsune::closeTab(int tabIndex)
 {
     ui->imageTabs->removeTab(tabIndex);
-}
-
-//------------------------------------------------------------------------------
-
-void Kitsune::newTab(int tabIndex)
-{
-    // ui->imageTabs->removeTab(tabIndex);
 }
 
 //------------------------------------------------------------------------------

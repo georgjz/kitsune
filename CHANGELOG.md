@@ -1,5 +1,10 @@
+## 0.2.3-preAlpha
+* Added multitab support. Multiple files can now be displayed at the same time
+* Changed license to MIT
+* Added rudimentart roadmap for future features
+
 ## 0.2.2-preAlpha
-* Eliminated bug that would break non-quadratic source pictures 
+* Eliminated bug that would break non-quadratic source pictures
 
 ## 0.2.1-preAlpha
 * 2bpp format now supported
