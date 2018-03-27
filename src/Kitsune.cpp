@@ -114,7 +114,8 @@ void Kitsune::saveAsImage()
 //------------------------------------------------------------------------------
 void Kitsune::exportPalette()
 {
-    // tileData->exportPalette(kitImage->getImage().colorTable());
+    KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
+    tileData->exportPalette(image->getImage().colorTable());
 }
 
 //------------------------------------------------------------------------------

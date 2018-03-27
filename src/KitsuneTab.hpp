@@ -41,6 +41,7 @@ public:
 
     // tab functions
     bool loadFile(const QString &fileName);
+    KitsuneImage* getTabContent() { return tabContent; }
     QString getFileName() { return tabContent->getFileName(); }
 
 private:
