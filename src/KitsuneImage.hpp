@@ -39,7 +39,8 @@ public:
     // image functions
     bool loadFile(const QString &fileName);
     bool saveFile(const QString &fileName);
-    void scaleImage(double factor);
+    // void scaleImage(double scaleFactor);
+    // double getScaleFactor();
 
     QImage getImage() { return image; }
     QString getFileName() { return fileName; }

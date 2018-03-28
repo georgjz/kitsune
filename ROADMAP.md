@@ -10,6 +10,7 @@
 * Add support for exporting tile sets in additional Bit Formats
   * ~~2bpp~~
   * 8bpp
+  * color depth check
 * Fix Export Dialog
   * Remember last path
   * Output file format selection work with .pal, .bin, and .map files
@@ -26,3 +27,4 @@
 * load TMX file
 * Tile Set Reducer
 * Tile Map Exporter (fixed size)
+* Add release build option

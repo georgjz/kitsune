@@ -2,4 +2,6 @@
 - [ ] Code refactoring
     - [ ] Better function/member documentation
     - [ ] Fundamental class descriptions
-- [ ] Improve README.md 
+- [ ] Improve README.md
+    - [ ] Add doxygen instructions
+- [ ] Adjust scrollbar methode

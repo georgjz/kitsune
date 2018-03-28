@@ -34,7 +34,6 @@
 #include "KitsuneTab.hpp"
 #include "KitsuneTileData.hpp"
 
-
 namespace Ui
 {
     class KitsuneUi;

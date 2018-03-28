@@ -92,12 +92,12 @@ bool KitsuneImage::saveFile(const QString &fileName)
 
 //------------------------------------------------------------------------------
 
-void KitsuneImage::scaleImage(double factor)
-{
-    Q_ASSERT(this->pixmap());
-    scaleFactor *= factor;
-    resize(scaleFactor * this->pixmap()->size());
-}
+// void KitsuneImage::scaleImage(double factor)
+// {
+//     Q_ASSERT(this->pixmap());
+//     scaleFactor *= factor;
+//     resize(scaleFactor * this->pixmap()->size());
+// }
 
 //------------------------------------------------------------------------------
 

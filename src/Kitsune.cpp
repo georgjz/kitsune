@@ -91,7 +91,7 @@ void Kitsune::openImage()
     QFileDialog dialog(this, tr("Open File"));
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
 
-    while (dialog.exec() == QDialog::Accepted && !tabList.last()->loadFile(dialog.selectedFiles().first())) {}
+    while (dialog.exec() == QDialog::Accepted && !tabList.last()->loadTabContent(dialog.selectedFiles().first())) {}
 
     // make latest tab visible, change title
     ui->imageTabs->insertTab(ui->imageTabs->currentIndex() + 1, // insert after current tab
@@ -118,6 +118,7 @@ void Kitsune::saveAsImage()
  */
 void Kitsune::exportPalette()
 {
+    // BUG: check for empty tabList
     // Get the current tab's image and export its palette
     KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
     tileData->exportPalette(image->getImage().colorTable());
@@ -129,6 +130,7 @@ void Kitsune::exportPalette()
  */
 void Kitsune::exportTileSet()
 {
+    // BUG: check for empty tabList
     // Get the current tab's image and export its tile set
     KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
     tileData->exportTileSet(image->getImage());

@@ -25,8 +25,8 @@
 #include "KitsuneTileData.hpp"
 
 KitsuneTab::KitsuneTab(QWidget *parent) :
-    QScrollArea(parent)
-    // scaleFactor(1.0)
+    QScrollArea(parent),
+    scaleFactor(2.0)
 {
     setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
 }
@@ -40,9 +40,21 @@ KitsuneTab::~KitsuneTab()
 
 //------------------------------------------------------------------------------
 
-bool KitsuneTab::loadFile(const QString &fileName)
+bool KitsuneTab::loadTabContent(const QString &fileName)
 {
     tabContent = new KitsuneImage(this);    // create image object
-    setWidget(tabContent);
+    setWidget(tabContent);                  // set tab content as widget
     return tabContent->loadFile(fileName);  // load image
+    // BUG: image not scaling
+    // Q_ASSERT(tabContent->pixmap());
+    // tabContent->resize(3.0 * tabContent->pixmap()->size()); // scale content
+}
+
+//------------------------------------------------------------------------------
+
+void KitsuneTab::scaleContent(double factor)
+{
+    Q_ASSERT(tabContent->pixmap());
+    scaleFactor *= factor;      // update scale factor
+    tabContent->resize(scaleFactor * tabContent->pixmap()->size()); // scale content
 }

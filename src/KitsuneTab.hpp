@@ -39,12 +39,16 @@ public:
     ~KitsuneTab();
 
     // tab functions
-    bool loadFile(const QString &fileName);
+    bool loadTabContent(const QString &fileName);   //!< loads the scroll area of the tab with content
+    bool saveTabContent(const QString &fileName);   //!< saves the content of the tab
+    void scaleContent(double factor);          //!< scale the content to given factor
+    // double getContentScaleFactor();                 // get the content's scale factor
     KitsuneImage* getTabContent() { return tabContent; }
     QString getFileName() { return tabContent->getFileName(); }
 
 private:
     KitsuneImage *tabContent;   // image shown in tab
+    double scaleFactor;
 };
 
 #endif /* KITSUNETAB_H */
