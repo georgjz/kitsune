@@ -28,7 +28,7 @@
 #include <QScrollArea>
 
 #include "KitsuneImage.hpp"
-#include "KitsuneTileData.hpp"
+// #include "KitsuneTileData.hpp"
 
 class KitsuneTab : public QScrollArea
 {
@@ -45,6 +45,11 @@ public:
     // double getContentScaleFactor();                 // get the content's scale factor
     KitsuneImage* getTabContent() { return tabContent; }
     QString getFileName() { return tabContent->getFileName(); }
+
+protected:
+    // react to mouse events
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
 
 private:
     KitsuneImage *tabContent;   // image shown in tab
