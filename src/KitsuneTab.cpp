@@ -57,11 +57,11 @@ bool KitsuneTab::loadTabContent(const QString &fileName)
 
 void KitsuneTab::scaleContent(double factor)
 {
-    // Scaling is destructive, keep original pixmap
+    // NOTE: Scaling is destructive, keep original pixmap
     // TODO: check min/max scale factor
     // TODO: better scale values
-    // scaleFactor += factor;                  // update scale factor
-    tabContent->scaleImage(factor);    // scale tab content
+    scaleFactor = factor;                   // update scale factor
+    tabContent->scaleImage(scaleFactor);    // scale tab content
 
     // TODO: change status bar
 }
@@ -93,8 +93,7 @@ void KitsuneTab::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    if(numPixels > 0)
-    { scaleContent(scaleFactor + 0.1); }
+    if(numPixels > 0) { scaleContent(scaleFactor + 0.1); }
     else              { scaleContent(scaleFactor - 0.1); }
 
     event->accept();
