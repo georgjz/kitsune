@@ -19,6 +19,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+#include <QGuiApplication>
+#include <QPixmap>
+#include <QPoint>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QWheelEvent>
 #include <QScrollArea>
 
 #include "KitsuneTab.hpp"
@@ -26,7 +32,7 @@
 
 KitsuneTab::KitsuneTab(QWidget *parent) :
     QScrollArea(parent),
-    scaleFactor(2.0)
+    scaleFactor(1.0)
 {
     setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
 }
@@ -45,16 +51,55 @@ bool KitsuneTab::loadTabContent(const QString &fileName)
     tabContent = new KitsuneImage(this);    // create image object
     setWidget(tabContent);                  // set tab content as widget
     return tabContent->loadFile(fileName);  // load image
-    // BUG: image not scaling
-    // Q_ASSERT(tabContent->pixmap());
-    // tabContent->resize(3.0 * tabContent->pixmap()->size()); // scale content
 }
 
 //------------------------------------------------------------------------------
 
 void KitsuneTab::scaleContent(double factor)
 {
-    Q_ASSERT(tabContent->pixmap());
-    scaleFactor *= factor;      // update scale factor
-    tabContent->resize(scaleFactor * tabContent->pixmap()->size()); // scale content
+    // Scaling is destructive, keep original pixmap
+    // TODO: check min/max scale factor
+    // TODO: better scale values
+    // scaleFactor += factor;                  // update scale factor
+    tabContent->scaleImage(factor);    // scale tab content
+
+    // TODO: change status bar
+}
+
+//------------------------------------------------------------------------------
+
+void KitsuneTab::mouseReleaseEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        QMessageBox::information(this, QGuiApplication::applicationDisplayName(),
+                                 tr("Mouse click position: %1, %2")
+                                 .arg(event->globalX())
+                                 .arg(event->globalY()) );
+    }
+
+    event->accept();
+}
+
+//------------------------------------------------------------------------------
+
+void KitsuneTab::wheelEvent(QWheelEvent *event)
+{
+    // check if mouse wheel was turned
+    int numPixels = event->delta() / 8;
+    if(numPixels == 0)
+    {
+        event->accept();
+        return;
+    }
+
+    if(numPixels > 0)
+    { scaleContent(scaleFactor + 0.1); }
+    else              { scaleContent(scaleFactor - 0.1); }
+
+    event->accept();
+    // QMessageBox::information(this, QG;uiApplication::applicationDisplayName(),
+    //                          tr("Mouse wheel: %1")
+    //                          .arg(QString::number(event->delta()))
+    //                          );
 }

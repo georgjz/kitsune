@@ -76,7 +76,7 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 }
 
 //------------------------------------------------------------------------------
-// private members
+// private slot members
 //------------------------------------------------------------------------------
 /*!
  *  This methode opens a new file in a new tab. It will create a new KitsuneTab
@@ -162,6 +162,34 @@ void Kitsune::setBitFormat()
 /*!
  * saveAsImage() details
  */
+void Kitsune::zoomReset()
+{
+    // code
+    tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
+}
+
+//------------------------------------------------------------------------------
+/*!
+ * saveAsImage() details
+ */
+void Kitsune::zoomIn()
+{
+    // code
+}
+
+//------------------------------------------------------------------------------
+/*!
+ * saveAsImage() details
+ */
+void Kitsune::zoomOut()
+{
+    // code
+}
+
+//------------------------------------------------------------------------------
+/*!
+ * saveAsImage() details
+ */
 void Kitsune::about()
 {
     QMessageBox::about(this, tr("About Kitsune"),
@@ -193,14 +221,23 @@ void Kitsune::closeTab(int tabIndex)
  */
 void Kitsune::connectActions()
 {
+    // File menu
     connect(ui->openAct, &QAction::triggered, this, &Kitsune::openImage);
     connect(ui->saveAsAct, &QAction::triggered, this, &Kitsune::saveAsImage);
+    connect(ui->exitAct, &QAction::triggered, this, &QWidget::close);
+    // Image menu
     connect(ui->expPaletteAct, &QAction::triggered, this, &Kitsune::exportPalette);
     connect(ui->expTileSetAct, &QAction::triggered, this, &Kitsune::exportTileSet);
-    connect(ui->exitAct, &QAction::triggered, this, &QWidget::close);
+    // Settings menu
     connect(ui->_2bppAct, &QAction::triggered, this, &Kitsune::setBitFormat);
     connect(ui->_4bppAct, &QAction::triggered, this, &Kitsune::setBitFormat);
+    // View menu
+    connect(ui->zoomResetAct, &QAction::triggered, this, &Kitsune::zoomReset);
+    connect(ui->zoomInAct, &QAction::triggered, this, &Kitsune::zoomIn);
+    connect(ui->zoomOutAct, &QAction::triggered, this, &Kitsune::zoomOut);
+    // About menu
     connect(ui->aboutAct, &QAction::triggered, this, &Kitsune::about);
     connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);
+    // Tab functions
     connect(ui->imageTabs, &QTabWidget::tabCloseRequested, this, &Kitsune::closeTab);
 }

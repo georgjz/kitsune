@@ -35,12 +35,11 @@
 #include "KitsuneTileData.hpp"
 
 KitsuneImage::KitsuneImage(QWidget *parent) :
-    QLabel(parent),
-    scaleFactor(1.0)
+    QLabel(parent)
 {
     setBackgroundRole(QPalette::Midlight);
     setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    setScaledContents(true);
+    // setScaledContents(true);
 }
 
 //------------------------------------------------------------------------------
@@ -68,6 +67,7 @@ bool KitsuneImage::loadFile(const QString &fileName)
 
     setImage(newImage);
 
+    // TODO: status bar update
     // statusBar()->showMessage(message);
     return true;
 }
@@ -86,18 +86,23 @@ bool KitsuneImage::saveFile(const QString &fileName)
         return false;
     }
 
+    // TODO: status bar update
     // write to status bar
     return true;
 }
 
 //------------------------------------------------------------------------------
 
-// void KitsuneImage::scaleImage(double factor)
-// {
-//     Q_ASSERT(this->pixmap());
-//     scaleFactor *= factor;
-//     resize(scaleFactor * this->pixmap()->size());
-// }
+void KitsuneImage::scaleImage(double factor)
+{
+    Q_ASSERT(this->pixmap());
+    // produce scaled pixmap from original pixmap
+    QPixmap scaledPixmap = originalPixmap.scaled(factor * originalPixmap.size(), Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    // set pixmap to new scaled pixmap
+    setPixmap(scaledPixmap);
+    // adjust label size
+    adjustSize();
+}
 
 //------------------------------------------------------------------------------
 
@@ -108,7 +113,8 @@ void KitsuneImage::setImage(const QImage &newImage)
 {
     image = newImage;
     setPixmap(QPixmap::fromImage(image));
-    scaleFactor = 1.0;
+    originalPixmap = *this->pixmap();          // keep original pixmap
 
+    // TODO: why? Resize label?
     adjustSize();
 }
