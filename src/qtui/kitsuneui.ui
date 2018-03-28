@@ -81,9 +81,18 @@
     </widget>
     <addaction name="menuBit_Format"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="zoomResetAct"/>
+    <addaction name="zoomInAct"/>
+    <addaction name="zoomOutAct"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuImage"/>
    <addaction name="menuSettings"/>
+   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -139,6 +148,21 @@
    </property>
    <property name="text">
     <string>&amp;4 bpp</string>
+   </property>
+  </action>
+  <action name="zoomInAct">
+   <property name="text">
+    <string>Zoom &amp;In</string>
+   </property>
+  </action>
+  <action name="zoomOutAct">
+   <property name="text">
+    <string>Zoom &amp;Out</string>
+   </property>
+  </action>
+  <action name="zoomResetAct">
+   <property name="text">
+    <string>R&amp;eset</string>
    </property>
   </action>
  </widget>

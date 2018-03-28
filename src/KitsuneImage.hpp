@@ -51,7 +51,6 @@ private:
     QPixmap originalPixmap;
     QString fileName;
     QImage image;
-    // double scaleFactor;
 };
 
 #endif /* KITSUNEIMAGE_H */

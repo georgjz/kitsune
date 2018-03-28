@@ -36,7 +36,6 @@
 
 KitsuneImage::KitsuneImage(QWidget *parent) :
     QLabel(parent)
-    // scaleFactor(1.0)
 {
     setBackgroundRole(QPalette::Midlight);
     setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -68,6 +67,7 @@ bool KitsuneImage::loadFile(const QString &fileName)
 
     setImage(newImage);
 
+    // TODO: status bar update
     // statusBar()->showMessage(message);
     return true;
 }
@@ -86,6 +86,7 @@ bool KitsuneImage::saveFile(const QString &fileName)
         return false;
     }
 
+    // TODO: status bar update
     // write to status bar
     return true;
 }
@@ -101,8 +102,6 @@ void KitsuneImage::scaleImage(double factor)
     setPixmap(scaledPixmap);
     // adjust label size
     adjustSize();
-
-    // resize(scaleFactor * this->pixmap()->size());
 }
 
 //------------------------------------------------------------------------------
@@ -115,7 +114,6 @@ void KitsuneImage::setImage(const QImage &newImage)
     image = newImage;
     setPixmap(QPixmap::fromImage(image));
     originalPixmap = *this->pixmap();          // keep original pixmap
-    // scaleFactor = 1.0;
 
     // TODO: why? Resize label?
     adjustSize();

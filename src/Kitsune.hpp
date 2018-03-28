@@ -57,11 +57,19 @@ public:
     ~Kitsune();                                 //!< default destructor
 
 private slots:
+    // File Menu
     void openImage();           //!< Opens an image in a new tab.
     void saveAsImage();         //!< Saves a copy of an image in the current tab
+    // Image Menu
     void exportPalette();       //!< Exports a full palette of a given image
     void exportTileSet();       //!< Exports a tile set in the given format
+    // Settings Menu
     void setBitFormat();        //!< Set the bit format for a given tab
+    // View Menu
+    void zoomReset();           //!< Reset zoom to 100%
+    void zoomIn();              //!< Zoom in
+    void zoomOut();             //!< Zoom out
+    // About Menu
     void about();               //!< Displays information about the application
     // tab functions
     void closeTab(int tabIndex);        //!< Close the current tab

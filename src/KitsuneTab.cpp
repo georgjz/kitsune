@@ -59,11 +59,11 @@ void KitsuneTab::scaleContent(double factor)
 {
     // Scaling is destructive, keep original pixmap
     // TODO: check min/max scale factor
-    scaleFactor += factor;      // update scale factor
-    tabContent->scaleImage(scaleFactor);
-    // QPixmap scaledPixmap = tabContent->pixmap()->scaled(scaleFactor * tabContent->pixmap()->size(), Qt::IgnoreAspectRatio, Qt::FastTransformation);
-    // tabContent->setPixmap(scaledPixmap);
-    // tabContent->adjustSize();
+    // TODO: better scale values
+    // scaleFactor += factor;                  // update scale factor
+    tabContent->scaleImage(factor);    // scale tab content
+
+    // TODO: change status bar
 }
 
 //------------------------------------------------------------------------------
@@ -93,8 +93,9 @@ void KitsuneTab::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    if(numPixels > 0) { scaleContent(0.1); }
-    else              { scaleContent(-0.1); }
+    if(numPixels > 0)
+    { scaleContent(scaleFactor + 0.1); }
+    else              { scaleContent(scaleFactor - 0.1); }
 
     event->accept();
     // QMessageBox::information(this, QG;uiApplication::applicationDisplayName(),
