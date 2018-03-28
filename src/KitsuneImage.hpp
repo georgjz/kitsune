@@ -39,7 +39,7 @@ public:
     // image functions
     bool loadFile(const QString &fileName);
     bool saveFile(const QString &fileName);
-    // void scaleImage(double scaleFactor);
+    void scaleImage(double factor);
     // double getScaleFactor();
 
     QImage getImage() { return image; }
@@ -48,9 +48,10 @@ public:
 private:
     void setImage(const QImage &newImage);
 
+    QPixmap originalPixmap;
     QString fileName;
     QImage image;
-    double scaleFactor;
+    // double scaleFactor;
 };
 
 #endif /* KITSUNEIMAGE_H */
