@@ -56,3 +56,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+
+# automated doxygen documentation
+doc/html/

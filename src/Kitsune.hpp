@@ -40,32 +40,39 @@ namespace Ui
     class KitsuneUi;
 }
 
+/*!
+ * \class Kitsune
+ *
+ * \brief Main class of the application
+ *
+ * Kitsune is the application main class that handles all all file operations,
+ * input/output handling and tab management.
+ *
+ */
 class Kitsune : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Kitsune(QWidget *parent = 0);
-    ~Kitsune();
+    explicit Kitsune(QWidget *parent = 0);      //!< default contructor
+    ~Kitsune();                                 //!< default destructor
 
 private slots:
-    void openImage();
-    void saveAsImage();
-    void exportPalette();
-    void exportTileSet();
-    void setBitFormat();
-    void about();
+    void openImage();           //!< Opens an image in a new tab.
+    void saveAsImage();         //!< Saves a copy of an image in the current tab
+    void exportPalette();       //!< Exports a full palette of a given image
+    void exportTileSet();       //!< Exports a tile set in the given format
+    void setBitFormat();        //!< Set the bit format for a given tab
+    void about();               //!< Displays information about the application
     // tab functions
-    void closeTab(int tabIndex);    // close tab
+    void closeTab(int tabIndex);        //!< Close the current tab
 
 private:
-    void connectActions();           // connect actions to slots
-    void scaleImage(double factor);
+    void connectActions();              //!< Connect actions to slots
 
-    QList<KitsuneTab*> tabList;
-    KitsuneTileData *tileData;
-
-    Ui::KitsuneUi *ui;
+    QList<KitsuneTab*> tabList;         //!< Holds all currently open tabs
+    KitsuneTileData *tileData;          //!< Pointer to the helper class to export data
+    Ui::KitsuneUi *ui;                  //!< Holds the Qt widgets of Kitsune
 };
 
 #endif /* KITSUNE_H */

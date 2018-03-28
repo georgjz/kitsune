@@ -78,6 +78,11 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 //------------------------------------------------------------------------------
 // private members
 //------------------------------------------------------------------------------
+/*!
+ *  This methode opens a new file in a new tab. It will create a new KitsuneTab
+ *  object and adds it to the tabList, that keeps track of all tabs currently
+ *  opened.
+ */
 void Kitsune::openImage()
 {
     // create new Tab
@@ -97,14 +102,20 @@ void Kitsune::openImage()
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  This methode will save the image in the current tab to any supported file
+ *  format.
+ */
 void Kitsune::saveAsImage()
 {
     // kitImage->saveFile(QFileDialog::getSaveFileName(this, tr("Save File As"), ""));
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  This methode will open a dialog to export the color palette in BGR555 format
+ *  in a .pal file that can be used in a SNES program.
+ */
 void Kitsune::exportPalette()
 {
     // Get the current tab's image and export its palette
@@ -113,7 +124,9 @@ void Kitsune::exportPalette()
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ * saveAsImage() details
+ */
 void Kitsune::exportTileSet()
 {
     // Get the current tab's image and export its tile set
@@ -122,7 +135,9 @@ void Kitsune::exportTileSet()
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ * saveAsImage() details
+ */
 void Kitsune::setBitFormat()
 {
     if(QObject::sender()->objectName() == "_2bppAct")
@@ -142,7 +157,9 @@ void Kitsune::setBitFormat()
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ * saveAsImage() details
+ */
 void Kitsune::about()
 {
     QMessageBox::about(this, tr("About Kitsune"),
@@ -160,14 +177,18 @@ void Kitsune::about()
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ * saveAsImage() details
+ */
 void Kitsune::closeTab(int tabIndex)
 {
     ui->imageTabs->removeTab(tabIndex);
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ * saveAsImage() details
+ */
 void Kitsune::connectActions()
 {
     connect(ui->openAct, &QAction::triggered, this, &Kitsune::openImage);
