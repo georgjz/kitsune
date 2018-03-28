@@ -31,7 +31,7 @@
 
 KitsuneTab::KitsuneTab(QWidget *parent) :
     QScrollArea(parent),
-    scaleFactor(2.0)
+    scaleFactor(1.0)
 {
     setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
 }
@@ -62,6 +62,9 @@ void KitsuneTab::scaleContent(double factor)
     Q_ASSERT(tabContent->pixmap());
     scaleFactor *= factor;      // update scale factor
     tabContent->resize(scaleFactor * tabContent->pixmap()->size()); // scale content
+    // tabContent->setPixmap(tabContent->pixmap()->
+    //                         scaled(scaleFactor * tabContent->pixmap()->size(),
+    //                                 Qt::IgnoreAspectRatio, Qt::FastTransformation));
 }
 
 //------------------------------------------------------------------------------
@@ -91,8 +94,8 @@ void KitsuneTab::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    if(numPixels > 0) { scaleContent(1.5); }
-    else              { scaleContent(0.5); }
+    if(numPixels > 0) { scaleContent(1.1); }
+    else              { scaleContent(0.9); }
 
     event->accept();
     // QMessageBox::information(this, QG;uiApplication::applicationDisplayName(),
