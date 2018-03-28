@@ -30,7 +30,6 @@
 Kitsune::Kitsune(QWidget *parent) :
     QMainWindow(parent),
     tileData(new KitsuneTileData),      // helper class
-    scaleFactor(1.0f),
     ui(new Ui::KitsuneUi)
 {
     // set up UI. duh.

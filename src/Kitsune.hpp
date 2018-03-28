@@ -64,7 +64,6 @@ private:
 
     QList<KitsuneTab*> tabList;
     KitsuneTileData *tileData;
-    double scaleFactor;
 
     Ui::KitsuneUi *ui;
 };
