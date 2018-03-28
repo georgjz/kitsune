@@ -35,12 +35,12 @@
 #include "KitsuneTileData.hpp"
 
 KitsuneImage::KitsuneImage(QWidget *parent) :
-    QLabel(parent),
-    scaleFactor(1.0)
+    QLabel(parent)
+    // scaleFactor(1.0)
 {
     setBackgroundRole(QPalette::Midlight);
     setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    setScaledContents(true);
+    // setScaledContents(true);
 }
 
 //------------------------------------------------------------------------------
@@ -92,12 +92,18 @@ bool KitsuneImage::saveFile(const QString &fileName)
 
 //------------------------------------------------------------------------------
 
-// void KitsuneImage::scaleImage(double factor)
-// {
-//     Q_ASSERT(this->pixmap());
-//     scaleFactor *= factor;
-//     resize(scaleFactor * this->pixmap()->size());
-// }
+void KitsuneImage::scaleImage(double factor)
+{
+    Q_ASSERT(this->pixmap());
+    // produce scaled pixmap from original pixmap
+    QPixmap scaledPixmap = originalPixmap.scaled(factor * originalPixmap.size(), Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    // set pixmap to new scaled pixmap
+    setPixmap(scaledPixmap);
+    // adjust label size
+    adjustSize();
+
+    // resize(scaleFactor * this->pixmap()->size());
+}
 
 //------------------------------------------------------------------------------
 
@@ -108,7 +114,9 @@ void KitsuneImage::setImage(const QImage &newImage)
 {
     image = newImage;
     setPixmap(QPixmap::fromImage(image));
-    scaleFactor = 1.0;
+    originalPixmap = *this->pixmap();          // keep original pixmap
+    // scaleFactor = 1.0;
 
+    // TODO: why? Resize label?
     adjustSize();
 }

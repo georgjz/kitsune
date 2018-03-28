@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 #include <QGuiApplication>
+#include <QPixmap>
 #include <QPoint>
 #include <QMessageBox>
 #include <QMouseEvent>
@@ -50,21 +51,19 @@ bool KitsuneTab::loadTabContent(const QString &fileName)
     tabContent = new KitsuneImage(this);    // create image object
     setWidget(tabContent);                  // set tab content as widget
     return tabContent->loadFile(fileName);  // load image
-    // BUG: image not scaling
-    // Q_ASSERT(tabContent->pixmap());
-    // tabContent->resize(3.0 * tabContent->pixmap()->size()); // scale content
 }
 
 //------------------------------------------------------------------------------
 
 void KitsuneTab::scaleContent(double factor)
 {
-    Q_ASSERT(tabContent->pixmap());
-    scaleFactor *= factor;      // update scale factor
-    tabContent->resize(scaleFactor * tabContent->pixmap()->size()); // scale content
-    // tabContent->setPixmap(tabContent->pixmap()->
-    //                         scaled(scaleFactor * tabContent->pixmap()->size(),
-    //                                 Qt::IgnoreAspectRatio, Qt::FastTransformation));
+    // Scaling is destructive, keep original pixmap
+    // TODO: check min/max scale factor
+    scaleFactor += factor;      // update scale factor
+    tabContent->scaleImage(scaleFactor);
+    // QPixmap scaledPixmap = tabContent->pixmap()->scaled(scaleFactor * tabContent->pixmap()->size(), Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    // tabContent->setPixmap(scaledPixmap);
+    // tabContent->adjustSize();
 }
 
 //------------------------------------------------------------------------------
@@ -94,8 +93,8 @@ void KitsuneTab::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    if(numPixels > 0) { scaleContent(1.1); }
-    else              { scaleContent(0.9); }
+    if(numPixels > 0) { scaleContent(0.1); }
+    else              { scaleContent(-0.1); }
 
     event->accept();
     // QMessageBox::information(this, QG;uiApplication::applicationDisplayName(),
