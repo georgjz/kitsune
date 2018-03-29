@@ -43,13 +43,18 @@ KitsuneImage::KitsuneImage(QWidget *parent) :
 }
 
 //------------------------------------------------------------------------------
+
 KitsuneImage::~KitsuneImage()
 {
     // destructor
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  Loads a new file given by the path and file name.
+ *
+ *  \param fileName The path and file name of the image to be opened
+ */
 bool KitsuneImage::loadFile(const QString &fileName)
 {
     // preserve file name
@@ -73,7 +78,11 @@ bool KitsuneImage::loadFile(const QString &fileName)
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  Saves the current image to a new file given by the path and file name.
+ *
+ *  \param fileName The path and file name of the new file to be saved
+ */
 bool KitsuneImage::saveFile(const QString &fileName)
 {
     QImageWriter writer(fileName);
@@ -92,7 +101,11 @@ bool KitsuneImage::saveFile(const QString &fileName)
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  Changes the scale of the displayed image to the new factor.
+ *
+ *  \param factor The new scale of the image
+ */
 void KitsuneImage::scaleImage(double factor)
 {
     Q_ASSERT(this->pixmap());
@@ -105,10 +118,12 @@ void KitsuneImage::scaleImage(double factor)
 }
 
 //------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-//  private member functions
-//------------------------------------------------------------------------------
+/*!
+ *  Sets the class's image member to the newly opened image. This member is
+ *  used to extract information about the image itself.
+ *
+ *  \param newImage The new image to be copied into image
+ */
 void KitsuneImage::setImage(const QImage &newImage)
 {
     image = newImage;

@@ -79,7 +79,7 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 // private slot members
 //------------------------------------------------------------------------------
 /*!
- *  This methode opens a new file in a new tab. It will create a new KitsuneTab
+ *  This method opens a new file in a new tab. It will create a new KitsuneTab
  *  object and adds it to the tabList, that keeps track of all tabs currently
  *  opened.
  */
@@ -103,7 +103,7 @@ void Kitsune::openImage()
 
 //------------------------------------------------------------------------------
 /*!
- *  This methode will save the image in the current tab to any supported file
+ *  This method will save the image in the current tab in any supported file
  *  format.
  */
 void Kitsune::saveAsImage()
@@ -113,8 +113,9 @@ void Kitsune::saveAsImage()
 
 //------------------------------------------------------------------------------
 /*!
- *  This methode will open a dialog to export the color palette in BGR555 format
- *  in a .pal file that can be used in a SNES program.
+ *  This method will open a dialog to export the color palette in BGR555 format
+ *  in a .pal file that can be used in a SNES program. The export itseld is
+ *  handled by KitsuneTileData.
  */
 void Kitsune::exportPalette()
 {
@@ -126,7 +127,8 @@ void Kitsune::exportPalette()
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  This method opens a dialog to export a tile set of the current tab. The
+ *  export itself is handled by KitsuneTileData.
  */
 void Kitsune::exportTileSet()
 {
@@ -138,7 +140,8 @@ void Kitsune::exportTileSet()
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  Changes the bit format for the current tab. This controls what format
+ *  the export functions of KitsuneTileData will use.
  */
 void Kitsune::setBitFormat()
 {
@@ -160,32 +163,29 @@ void Kitsune::setBitFormat()
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  Resets the scale factor of the current tab.
  */
 void Kitsune::zoomReset()
 {
     // reset scale factor of current tab to 1.0
-    // tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
-    // get pointer to current tab
     KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
     currentTab->setScaleFactor(1.0);
 }
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  Increases the scale factor of the current tab.
  */
 void Kitsune::zoomIn()
 {
     // increase scale factor for current tab by 0.1
-    // tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
     KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
     currentTab->setScaleFactor(currentTab->getScaleFactor() + 0.1);
 }
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  Decreases the scale factor of the current tab.
  */
 void Kitsune::zoomOut()
 {
@@ -197,7 +197,7 @@ void Kitsune::zoomOut()
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  Displays information about the application in a dialog.
  */
 void Kitsune::about()
 {
@@ -217,7 +217,7 @@ void Kitsune::about()
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  Invoked whenever a tab is closed.
  */
 void Kitsune::closeTab(int tabIndex)
 {
@@ -226,7 +226,7 @@ void Kitsune::closeTab(int tabIndex)
 
 //------------------------------------------------------------------------------
 /*!
- * saveAsImage() details
+ *  Connects all actions of KitsuneUi to members of the Kitsune class.
  */
 void Kitsune::connectActions()
 {

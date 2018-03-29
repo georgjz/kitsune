@@ -19,7 +19,13 @@ KitsuneTileData::~KitsuneTileData()
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  This method creates a new .pal file which contains all the colors of the
+ *  current tab's content. It converts the colors from RGB888 to BGR555 color
+ *  format used by the SNES.
+ *
+ *  \param colorTable A vector containing all the colors of the palette
+ */
 bool KitsuneTileData::exportPalette(const QVector<QRgb> &colorTable)
 {
     // get output file name
@@ -51,14 +57,20 @@ bool KitsuneTileData::exportPalette(const QVector<QRgb> &colorTable)
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  This method creates a new .vra file which contains the tile set generated
+ *  from the given image file. The output format depends on the selected tile size.
+ *  It converts the image to the index format used by the SNES.
+ *
+ *  \param image The image to be exported as a tile set
+ */
 bool KitsuneTileData::exportTileSet(const QImage &image)
 {
     // get output file name
     QString fileName = QFileDialog::getSaveFileName(Q_NULLPTR,
                                                     QObject::tr("Export Tile Set As"),
                                                     "",
-                                                    QObject::tr("Palette Data (*.pal)"));  
+                                                    QObject::tr("Palette Data (*.pal)"));
     // create output file
     QFile outputFile(fileName);
     outputFile.open(QIODevice::WriteOnly);
@@ -133,21 +145,32 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  This method is a stub. It will export a tile map in a format readable by
+ *  the SNES.
+ */
 bool KitsuneTileData::exportTileMap()
 {
     // code
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  Changes the current bit format.
+ *
+ *  \param bitFormat The new bit format to be used
+ */
 void KitsuneTileData::setBitFormat(BitFormats bitFormat)
 {
     this->bitFormat = bitFormat;
 }
 
 //------------------------------------------------------------------------------
-
+/*!
+ *  Changes the current tile size.
+ *
+ *  \param tileSize The new tile size to be used
+ */
 void KitsuneTileData::setTileSize(TileSizes tileSize)
 {
     this->tileSize = tileSize;

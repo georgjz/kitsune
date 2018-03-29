@@ -53,18 +53,18 @@ class Kitsune : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Kitsune(QWidget *parent = 0);      //!< default contructor
-    ~Kitsune();                                 //!< default destructor
+    explicit Kitsune(QWidget *parent = 0);      //!< Default constructor
+    ~Kitsune();                                 //!< Default destructor
 
 private slots:
     // File Menu
     void openImage();           //!< Opens an image in a new tab.
-    void saveAsImage();         //!< Saves a copy of an image in the current tab
+    void saveAsImage();         //!< Saves a copy of the image in the current tab
     // Image Menu
     void exportPalette();       //!< Exports a full palette of a given image
     void exportTileSet();       //!< Exports a tile set in the given format
     // Settings Menu
-    void setBitFormat();        //!< Set the bit format for a given tab
+    void setBitFormat();        //!< Sets the bit format for a given tab
     // View Menu
     void zoomReset();           //!< Reset zoom to 100%
     void zoomIn();              //!< Zoom in

@@ -28,29 +28,39 @@
 
 #include "KitsuneTileData.hpp"
 
+/*!
+ * \class KitsuneImage
+ *
+ * \brief Class to handle the content of a tab
+ *
+ *  This class handles all operations relating to the content of a tab.
+ *  The main focus are operations relating to the modification and
+ *  manipulation of the image.
+ *
+ */
 class KitsuneImage : public QLabel
 {
     Q_OBJECT
 
 public:
-    explicit KitsuneImage(QWidget *parent = 0);
-    ~KitsuneImage();
+    explicit KitsuneImage(QWidget *parent = 0);     //!< Default constructor
+    ~KitsuneImage();                                //!< Default destructor
 
     // image functions
-    bool loadFile(const QString &fileName);
-    bool saveFile(const QString &fileName);
-    void scaleImage(double factor);
+    bool loadFile(const QString &fileName);         //!< Opens a new file
+    bool saveFile(const QString &fileName);         //!< Saves the current file
+    void scaleImage(double factor);                 //!< Changes the scale of the image
     // double getScaleFactor();
 
-    QImage getImage() { return image; }
-    QString getFileName() { return fileName; }
+    QImage getImage() { return image; }             //!< Returns the current image
+    QString getFileName() { return fileName; }      //!< Returns the image file name
 
 private:
-    void setImage(const QImage &newImage);
+    void setImage(const QImage &newImage);          //!< Sets the current image
 
-    QPixmap originalPixmap;
-    QString fileName;
-    QImage image;
+    QPixmap originalPixmap;     //!< Holds the original Pixmap
+    QString fileName;           //!< Holds the image's file name
+    QImage image;               //!< Holds the image's QImage file
 };
 
 #endif /* KITSUNEIMAGE_H */

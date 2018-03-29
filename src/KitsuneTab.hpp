@@ -28,66 +28,51 @@
 #include <QScrollArea>
 
 #include "KitsuneImage.hpp"
-// #include "KitsuneTileData.hpp"
 
+/*!
+ * \class KitsuneTab
+ *
+ * \brief Class to handle tab functions
+ *
+ *  This class handles all operations relating to the tabs opened in Kitsune.
+ *  The most important function is to open and close tabs and handle different
+ *  display modes.
+ *
+ */
 class KitsuneTab : public QScrollArea
 {
     Q_OBJECT
     // If scaleFactor changes, emit signal to update content
     Q_PROPERTY( double value READ getScaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged )
-    // class foo : public QObject
-    // {
-    //     Q_OBJECT
-    //     Q_PROPERTY( int value READ getValue WRITE setValue NOTIFY valueChanged )
-    // public:
-    //     explicit foo( QObject* parent = nullptr ) :
-    //         QObject{ parent }, i_{ 0 } {}
-    //     virtual ~foo() {}
-    //
-    //     int getValue() const { return i_; }
-    // public slots:
-    //     void setValue( int value )
-    //     {
-    //         if ( value != i_ ) {
-    //             i_ = value;
-    //             emit valueChanged( i_ );
-    //         }
-    //     }
-    // signals:
-    //     void valueChanged( int value );
-    // private:
-    //     int i_;
-    // };
 
 public:
-    explicit KitsuneTab(QWidget *parent = 0);
-    ~KitsuneTab();
+    explicit KitsuneTab(QWidget *parent = 0);               //!< Default constructor
+    ~KitsuneTab();                                          //!< Default destructor
 
     // tab functions
-    bool loadTabContent(const QString &fileName);   //!< loads the scroll area of the tab with content
-    bool saveTabContent(const QString &fileName);   //!< saves the content of the tab
-    double getScaleFactor() const { return scaleFactor; }  // get the content's scale factor
-    KitsuneImage* getTabContent() { return tabContent; }
-    QString getFileName() { return tabContent->getFileName(); }
+    bool loadTabContent(const QString &fileName);           //!< Loads the scroll area of the tab with content
+    bool saveTabContent(const QString &fileName);           //!< Saves the content of the tab
+    double getScaleFactor() const { return scaleFactor; }   //!< Returns the current scale factor
+    KitsuneImage* getTabContent() { return tabContent; }    //!< Returns a pointer to the tab's content
+    QString getFileName() { return tabContent->getFileName(); }  //!< Returns the tab's content file name
 
 public slots:
-    void setScaleFactor(double factor);
+    void setScaleFactor(double factor);         //!< Modify the scale factor of the tab
 
 private slots:
-    void scaleContent(double factor);          //!< scale the content to given factor
+    void scaleContent(double factor);           //!< Scale the tab's content to a given factor
 
 signals:
-    void scaleFactorChanged(double factor);
+    void scaleFactorChanged(double factor);     //!< Invoked whenever scale factor changes
 
 protected:
-    // react to mouse events
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    void wheelEvent(QWheelEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;   //!< Changes the scale factor
 
 private:
-    void connectActions();      // connect actions of class
-    KitsuneImage *tabContent;   // image shown in tab
-    double scaleFactor;
+    void connectActions();      //!< Connects all slots and signals of the KitsuneTab class
+
+    KitsuneImage *tabContent;   //!< Pointer to the tab's content
+    double scaleFactor;         //!< Scale factor to modify the tab's content
 };
 
 #endif /* KITSUNETAB_H */
