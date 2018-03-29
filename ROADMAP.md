@@ -2,7 +2,7 @@
 
 ### 0.3-Alpha
 * ~~Change license to MIT~~
-* Multitab support
+* ~~Multitab support~~
 * Status bar shows last operation's result
 * Controls
   * Zoom
