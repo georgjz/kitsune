@@ -33,6 +33,31 @@
 class KitsuneTab : public QScrollArea
 {
     Q_OBJECT
+    // If scaleFactor changes, emit signal to update content
+    Q_PROPERTY( double value READ getScaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged )
+    // class foo : public QObject
+    // {
+    //     Q_OBJECT
+    //     Q_PROPERTY( int value READ getValue WRITE setValue NOTIFY valueChanged )
+    // public:
+    //     explicit foo( QObject* parent = nullptr ) :
+    //         QObject{ parent }, i_{ 0 } {}
+    //     virtual ~foo() {}
+    //
+    //     int getValue() const { return i_; }
+    // public slots:
+    //     void setValue( int value )
+    //     {
+    //         if ( value != i_ ) {
+    //             i_ = value;
+    //             emit valueChanged( i_ );
+    //         }
+    //     }
+    // signals:
+    //     void valueChanged( int value );
+    // private:
+    //     int i_;
+    // };
 
 public:
     explicit KitsuneTab(QWidget *parent = 0);
@@ -41,10 +66,18 @@ public:
     // tab functions
     bool loadTabContent(const QString &fileName);   //!< loads the scroll area of the tab with content
     bool saveTabContent(const QString &fileName);   //!< saves the content of the tab
-    void scaleContent(double factor);          //!< scale the content to given factor
-    // double getContentScaleFactor();                 // get the content's scale factor
+    double getScaleFactor() const { return scaleFactor; }  // get the content's scale factor
     KitsuneImage* getTabContent() { return tabContent; }
     QString getFileName() { return tabContent->getFileName(); }
+
+public slots:
+    void setScaleFactor(double factor);
+
+private slots:
+    void scaleContent(double factor);          //!< scale the content to given factor
+
+signals:
+    void scaleFactorChanged(double factor);
 
 protected:
     // react to mouse events
@@ -52,6 +85,7 @@ protected:
     void wheelEvent(QWheelEvent *event) override;
 
 private:
+    void connectActions();      // connect actions of class
     KitsuneImage *tabContent;   // image shown in tab
     double scaleFactor;
 };

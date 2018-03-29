@@ -35,6 +35,7 @@ KitsuneTab::KitsuneTab(QWidget *parent) :
     scaleFactor(1.0)
 {
     setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
+    connectActions();                                   // connect actions
 }
 
 //------------------------------------------------------------------------------
@@ -55,13 +56,28 @@ bool KitsuneTab::loadTabContent(const QString &fileName)
 
 //------------------------------------------------------------------------------
 
+bool KitsuneTab::saveTabContent(const QString &fileName)
+{
+    // code
+}
+
+//------------------------------------------------------------------------------
+
+void KitsuneTab::setScaleFactor(double factor)
+{
+    scaleFactor = factor;
+    emit scaleFactorChanged(scaleFactor);
+}
+
+//------------------------------------------------------------------------------
+
 void KitsuneTab::scaleContent(double factor)
 {
-    // Scaling is destructive, keep original pixmap
+    // NOTE: Scaling is destructive, keep original pixmap
     // TODO: check min/max scale factor
     // TODO: better scale values
-    // scaleFactor += factor;                  // update scale factor
-    tabContent->scaleImage(factor);    // scale tab content
+    scaleFactor = factor;                   // update scale factor
+    tabContent->scaleImage(scaleFactor);    // scale tab content
 
     // TODO: change status bar
 }
@@ -93,13 +109,19 @@ void KitsuneTab::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    if(numPixels > 0)
-    { scaleContent(scaleFactor + 0.1); }
-    else              { scaleContent(scaleFactor - 0.1); }
+    if(numPixels > 0) { setScaleFactor(scaleFactor + 0.1); }
+    else              { setScaleFactor(scaleFactor - 0.1); }
 
     event->accept();
     // QMessageBox::information(this, QG;uiApplication::applicationDisplayName(),
     //                          tr("Mouse wheel: %1")
     //                          .arg(QString::number(event->delta()))
     //                          );
+}
+
+//------------------------------------------------------------------------------
+
+void KitsuneTab::connectActions()
+{
+    connect(this, &KitsuneTab::scaleFactorChanged, this, &KitsuneTab::scaleContent);
 }
