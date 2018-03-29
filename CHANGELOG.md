@@ -1,3 +1,9 @@
+## 0.3-Alpha
+* First Alpha release!
+* Multiple files can be opened at the same time
+* Controls
+  * Tab content can be zoomed with the mouse wheel 
+
 ## 0.2.3-preAlpha
 * Added multitab support. Multiple files can now be displayed at the same time
 * Changed license to MIT

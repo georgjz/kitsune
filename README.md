@@ -18,3 +18,10 @@ Run first `qmake` and then `make` to compile Kitsune. The executable is
 placed in the subdirectory `build`. Optionally, you can use `make install` to
 add Kitsune to your system, but it is discouraged as of now. This software is
 still experimental.
+
+To build the code documentation, move to the `doc` directory and run doxygen:
+```
+$ doxygen Doxyfile
+```
+This will create a new directory `html` which will contain the code documentation.
+Open `index.html` to get to the starting page of the documentation.
