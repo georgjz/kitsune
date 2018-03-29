@@ -1,13 +1,13 @@
-## 0.3-Alpha
-* First Alpha release!
-* Multiple files can be opened at the same time
-* Controls
-  * Tab content can be zoomed with the mouse wheel 
+## 0.2.4-preAlpha
+* Mouse wheel can now be used to zoom in and out images in tabs
+  * Zoom functions also controllable through new View Menu
+* Added `Doxyfile` in `doc` that can be used to generate code documentation
+* Added Contribution Guide to README.md
 
 ## 0.2.3-preAlpha
 * Added multitab support. Multiple files can now be displayed at the same time
 * Changed license to MIT
-* Added rudimentart roadmap for future features
+* Added rudimentary roadmap for future features
 
 ## 0.2.2-preAlpha
 * Eliminated bug that would break non-quadratic source pictures

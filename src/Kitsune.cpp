@@ -202,7 +202,7 @@ void Kitsune::zoomOut()
 void Kitsune::about()
 {
     QMessageBox::about(this, tr("About Kitsune"),
-            tr("<p>Kitsune 0.2.3-preAlpha</p> "
+            tr("<p>Kitsune 0.2.4-preAlpha</p> "
                "<p>Pixel Graphic and Tilemap Tool for SNES Developers</p>"
                "<p>License: Permission is hereby granted, free of charge, to any person obtaining a copy "
                "of this software and associated documentation files (the \"Software\"), to deal "
