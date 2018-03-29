@@ -35,6 +35,7 @@ KitsuneTab::KitsuneTab(QWidget *parent) :
     scaleFactor(1.0)
 {
     setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
+    connectActions();                                   // connect actions
 }
 
 //------------------------------------------------------------------------------
@@ -51,6 +52,21 @@ bool KitsuneTab::loadTabContent(const QString &fileName)
     tabContent = new KitsuneImage(this);    // create image object
     setWidget(tabContent);                  // set tab content as widget
     return tabContent->loadFile(fileName);  // load image
+}
+
+//------------------------------------------------------------------------------
+
+bool KitsuneTab::saveTabContent(const QString &fileName)
+{
+    // code
+}
+
+//------------------------------------------------------------------------------
+
+void KitsuneTab::setScaleFactor(double factor)
+{
+    scaleFactor = factor;
+    emit scaleFactorChanged(scaleFactor);
 }
 
 //------------------------------------------------------------------------------
@@ -93,12 +109,19 @@ void KitsuneTab::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    if(numPixels > 0) { scaleContent(scaleFactor + 0.1); }
-    else              { scaleContent(scaleFactor - 0.1); }
+    if(numPixels > 0) { setScaleFactor(scaleFactor + 0.1); }
+    else              { setScaleFactor(scaleFactor - 0.1); }
 
     event->accept();
     // QMessageBox::information(this, QG;uiApplication::applicationDisplayName(),
     //                          tr("Mouse wheel: %1")
     //                          .arg(QString::number(event->delta()))
     //                          );
+}
+
+//------------------------------------------------------------------------------
+
+void KitsuneTab::connectActions()
+{
+    connect(this, &KitsuneTab::scaleFactorChanged, this, &KitsuneTab::scaleContent);
 }

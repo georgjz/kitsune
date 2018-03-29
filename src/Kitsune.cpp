@@ -164,8 +164,11 @@ void Kitsune::setBitFormat()
  */
 void Kitsune::zoomReset()
 {
-    // code
-    tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
+    // reset scale factor of current tab to 1.0
+    // tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
+    // get pointer to current tab
+    KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
+    currentTab->setScaleFactor(1.0);
 }
 
 //------------------------------------------------------------------------------
@@ -174,7 +177,10 @@ void Kitsune::zoomReset()
  */
 void Kitsune::zoomIn()
 {
-    // code
+    // increase scale factor for current tab by 0.1
+    // tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
+    KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
+    currentTab->setScaleFactor(currentTab->getScaleFactor() + 0.1);
 }
 
 //------------------------------------------------------------------------------
@@ -183,7 +189,10 @@ void Kitsune::zoomIn()
  */
 void Kitsune::zoomOut()
 {
-    // code
+    // decrease scale factor for current tab by 0.1
+    // tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
+    KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
+    currentTab->setScaleFactor(currentTab->getScaleFactor() - 0.1);
 }
 
 //------------------------------------------------------------------------------

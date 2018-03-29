@@ -22,9 +22,13 @@
 * Grid overlay for images
 * Status bar shows cursor positions/pixel coordinates and color value(24-bit and SNES BGR format)
 * Property window/editor
+* Better tab icons
 
 ## 0.5-Alpha
-* load TMX file
+* load TMX files
 * Tile Set Reducer
 * Tile Map Exporter (fixed size)
 * Add release build option
+
+## 0.6-Beta
+* react to updated files
