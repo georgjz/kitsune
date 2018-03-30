@@ -38,7 +38,6 @@ Kitsune::Kitsune(QWidget *parent) :
     ui->setupUi(this);
     this->setCentralWidget(ui->centralWidget);  // set central widget
     ui->centralWidget->hide();
-
     connectActions();
 
     // Add status tips to all actions
@@ -55,6 +54,9 @@ Kitsune::Kitsune(QWidget *parent) :
     zoomLevel->setSuffix("%");
     zoomLevel->setEnabled(false);
     ui->statusBar->addPermanentWidget(this->zoomLevel, 0);
+
+    // install event handler/filter
+    installEventFilter(this);
 
     // TODO: restore last screen size
     resize(QGuiApplication::primaryScreen()->availableSize() * 3/5);
@@ -322,26 +324,32 @@ void Kitsune::closeTab(int tabIndex)
  *
  *  \param event The QWheelEvent emitted by Qt
  */
-void Kitsune::wheelEvent(QWheelEvent *event)
+bool Kitsune::eventFilter(QObject *obj, QEvent *event)
 {
     // check if mouse wheel was turned
-    int numPixels = event->delta() / 8;
-    if(numPixels == 0)
+    if(event->type() == QEvent::Wheel)
     {
-        // TODO: return statement superfluous?
-        event->accept();
-        return;
-    }
+        QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+        int numPixels = wheelEvent->delta() / 8;
+        if(numPixels == 0)
+        {
+            // TODO: return statement superfluous?
+            // event->accept();
+            return true;
+        }
 
-    if(!tabList.isEmpty())   // sanity check
-    {
-        int zoom = currentTab->getScaleFactor() * 100;
-        zoom = (numPixels > 0)
-            ? zoom + 10 : zoom - 10;
-        zoomLevel->setValue(zoom);
+        if(!tabList.isEmpty())   // sanity check
+        {
+            int zoom = currentTab->getScaleFactor() * 100;
+            zoom = (numPixels > 0)
+                ? zoom + 10 : zoom - 10;
+                zoomLevel->setValue(zoom);
+            return true;
+        }
     }
     // event has been handled
-    event->accept();
+    // event->accept();
+    return false;
 }
 
 //------------------------------------------------------------------------------

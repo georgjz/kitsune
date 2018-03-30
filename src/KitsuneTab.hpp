@@ -66,7 +66,7 @@ signals:
     void scaleFactorChanged(double factor);     //!< Invoked whenever scale factor changes
 
 // protected:
-//     void wheelEvent(QWheelEvent *event) override;   //!< Changes the scale factor
+    // void wheelEvent(QWheelEvent *event) override;   //!< Changes the scale factor
 
 private:
     void connectActions();      //!< Connects all slots and signals of the KitsuneTab class

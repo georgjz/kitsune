@@ -81,7 +81,7 @@ private slots:
     void changeZoomLevel(int value);    //!< Invoked by signal tabList::valueChanged
 
 protected:
-    void wheelEvent(QWheelEvent *event) override;   //!< Changes the scale factor/zoom level
+    bool eventFilter(QObject *obj, QEvent *event) override;   //!< Changes the scale factor/zoom level
 
 private:
     void connectActions();              //!< Connect actions to slots and signals
