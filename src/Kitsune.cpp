@@ -111,6 +111,10 @@ void Kitsune::openImage()
         ui->imageTabs->setCurrentWidget(tabList.last());            // change focus to new tab
         ui->centralWidget->show();                                  // make tab widget visible
     }
+
+    // enable Export Palette and Export Tile Set menu entries
+    ui->expPaletteAct->setEnabled(true);
+    ui->expTileSetAct->setEnabled(true);
 }
 
 //------------------------------------------------------------------------------
@@ -240,6 +244,13 @@ void Kitsune::about()
 void Kitsune::closeTab(int tabIndex)
 {
     ui->imageTabs->removeTab(tabIndex);
+    tabList.removeAt(tabIndex);
+    // disable export functions if no tab open
+    if(tabList.isEmpty())
+    {
+        ui->expPaletteAct->setEnabled(false);
+        ui->expTileSetAct->setEnabled(false);
+    }
 }
 
 //------------------------------------------------------------------------------

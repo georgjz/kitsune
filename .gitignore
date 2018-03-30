@@ -36,6 +36,7 @@
 *.png
 *.jpg
 *.pal
+*.vra
 
 # Qt/qmake specific
 [Mm]akefile

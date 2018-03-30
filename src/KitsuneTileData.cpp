@@ -32,7 +32,10 @@ bool KitsuneTileData::exportPalette(const QVector<QRgb> &colorTable)
     QString fileName = QFileDialog::getSaveFileName(Q_NULLPTR,
                                                     QObject::tr("Export Palette As"),
                                                     "",
-                                                    QObject::tr("Palette Data (*.pal)"));    // create output file
+                                                    QObject::tr("Palette Data (*.pal)"));
+    // add file extention if it's missing
+    if(!fileName.endsWith(".pal"))
+        fileName.append(".pal");
     // create output file
     QFile outputFile(fileName);
     outputFile.open(QIODevice::WriteOnly);
@@ -70,7 +73,11 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
     QString fileName = QFileDialog::getSaveFileName(Q_NULLPTR,
                                                     QObject::tr("Export Tile Set As"),
                                                     "",
-                                                    QObject::tr("Palette Data (*.pal)"));
+                                                    QObject::tr("Sprite Data (*.vra)"));
+
+    // add file extention if it's missing
+    if(!fileName.endsWith(".vra"))
+        fileName.append(".vra");
     // create output file
     QFile outputFile(fileName);
     outputFile.open(QIODevice::WriteOnly);
@@ -152,6 +159,7 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
 bool KitsuneTileData::exportTileMap()
 {
     // code
+    return false;
 }
 
 //------------------------------------------------------------------------------
