@@ -117,16 +117,25 @@
    </property>
   </action>
   <action name="saveAsAct">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Save &amp;As... </string>
    </property>
   </action>
   <action name="expPaletteAct">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Export &amp;Palette</string>
    </property>
   </action>
   <action name="expTileSetAct">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Export Tile &amp;Set</string>
    </property>

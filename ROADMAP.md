@@ -23,6 +23,7 @@
 * Status bar shows cursor positions/pixel coordinates and color value(24-bit and SNES BGR format)
 * Property window/editor
 * Better tab icons
+* Replace export functions with more robust dialog 
 
 ## 0.5-Alpha
 * load TMX files
