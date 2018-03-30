@@ -132,9 +132,12 @@ void Kitsune::saveAsImage()
 void Kitsune::exportPalette()
 {
     // BUG: check for empty tabList
-    // Get the current tab's image and export its palette
-    KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
-    tileData->exportPalette(image->getImage().colorTable());
+    if(!tabList.isEmpty())       // sanity check for empty tab list
+    {
+        // Get the current tab's image and export its palette
+        KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
+        tileData->exportPalette(image->getImage().colorTable());
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -145,9 +148,12 @@ void Kitsune::exportPalette()
 void Kitsune::exportTileSet()
 {
     // BUG: check for empty tabList
-    // Get the current tab's image and export its tile set
-    KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
-    tileData->exportTileSet(image->getImage());
+    if(!tabList.isEmpty())       // check for empty tab list
+    {
+        // Get the current tab's image and export its tile set
+        KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
+        tileData->exportTileSet(image->getImage());
+    }
 }
 
 //------------------------------------------------------------------------------
