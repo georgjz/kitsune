@@ -90,15 +90,27 @@ void Kitsune::openImage()
     // get file name and open it
     QFileDialog dialog(this, tr("Open File"));
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
+    QString fileName;
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        fileName = dialog.selectedFiles().first();
+    }
+    else
+    {
+        if(!tabList.isEmpty())       // sanity check
+            tabList.removeLast();    // remove newly add tab
+        return;                      // return to caller
+    }
 
-    while (dialog.exec() == QDialog::Accepted && !tabList.last()->loadTabContent(dialog.selectedFiles().first())) {}
-
-    // make latest tab visible, change title
-    ui->imageTabs->insertTab(ui->imageTabs->currentIndex() + 1, // insert after current tab
-                             tabList.last(),                    // add newly opened tab
-                             tabList.last()->getFileName());    // tab text is file name
-    ui->imageTabs->setCurrentWidget(tabList.last());            // change focus to new tab
-    ui->centralWidget->show();                                  // make tab widget visible
+    if(tabList.last()->loadTabContent(fileName))    // check for errors while loading file
+    {
+        // make latest tab visible, change title
+        ui->imageTabs->insertTab(ui->imageTabs->currentIndex() + 1, // insert after current tab
+                                tabList.last(),                     // add newly opened tab
+                                tabList.last()->getFileName());     // tab text is file name
+        ui->imageTabs->setCurrentWidget(tabList.last());            // change focus to new tab
+        ui->centralWidget->show();                                  // make tab widget visible
+    }
 }
 
 //------------------------------------------------------------------------------
