@@ -35,7 +35,7 @@ KitsuneTab::KitsuneTab(QWidget *parent) :
 {
     setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
     connectActions();                                   // connect actions
-    installEventFilter(this);                           // install event filter
+    viewport()->installEventFilter(this);                 // install event filter on the viewport
 }
 
 //------------------------------------------------------------------------------
@@ -115,10 +115,22 @@ bool KitsuneTab::eventFilter(QObject *obj, QEvent *event)
     //              else, return false
     // react to no event
 
-        // check if mouse wheel was turned
+    // check if mouse wheel was turned
+    // if(event->type() == QEvent::Wheel)
+    // {
+    //     // check for Control and
+    //     return true;
+    // }
+    // check if mouse wheel was turned
     if(event->type() == QEvent::Wheel)
     {
-        return true;
+        // QWheelEvent *zoomEvent = static_cast<QWheelEvent*>(event);
+        // // Ctrl key is pressed
+        // if(zoomEvent->modifiers().testFlag(Qt::ControlModifier))
+        //     return false;
+
+        // ignore wheel events
+        event->ignore();
     }
 }
 

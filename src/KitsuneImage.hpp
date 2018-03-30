@@ -50,7 +50,6 @@ public:
     bool loadFile(const QString &fileName);         //!< Opens a new file
     bool saveFile(const QString &fileName);         //!< Saves the current file
     void scaleImage(double factor);                 //!< Changes the scale of the image
-    // double getScaleFactor();
 
     QImage getImage() { return image; }             //!< Returns the current image
     QString getFileName() { return fileName; }      //!< Returns the image file name
