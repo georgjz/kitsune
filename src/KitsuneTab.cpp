@@ -35,6 +35,7 @@ KitsuneTab::KitsuneTab(QWidget *parent) :
 {
     setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);  // center content
     connectActions();                                   // connect actions
+    installEventFilter(this);                           // install event filter
 }
 
 //------------------------------------------------------------------------------
@@ -108,22 +109,18 @@ void KitsuneTab::scaleContent(double factor)
  *
  *  \param event The QWheelEvent emitted by Qt
  */
-// void KitsuneTab::wheelEvent(QWheelEvent *event)
-// {
-//     // check if mouse wheel was turned
-//     int numPixels = event->delta() / 8;
-//     if(numPixels == 0)
-//     {
-//         event->accept();
-//         return;
-//     }
-//
-//     if(numPixels > 0) { setScaleFactor(scaleFactor + 0.1); }
-//     else              { setScaleFactor(scaleFactor - 0.1); }
-//
-//     // event has been handled
-//     event->accept();
-// }
+bool KitsuneTab::eventFilter(QObject *obj, QEvent *event)
+{
+    // Eventfiler: handling done, return true
+    //              else, return false
+    // react to no event
+
+        // check if mouse wheel was turned
+    if(event->type() == QEvent::Wheel)
+    {
+        return true;
+    }
+}
 
 //------------------------------------------------------------------------------
 /*!

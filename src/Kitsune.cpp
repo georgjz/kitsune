@@ -329,12 +329,10 @@ bool Kitsune::eventFilter(QObject *obj, QEvent *event)
     // check if mouse wheel was turned
     if(event->type() == QEvent::Wheel)
     {
-        QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
-        int numPixels = wheelEvent->delta() / 8;
+        QWheelEvent *zoomEvent = static_cast<QWheelEvent*>(event);
+        int numPixels = zoomEvent->delta() / 8;
         if(numPixels == 0)
         {
-            // TODO: return statement superfluous?
-            // event->accept();
             return true;
         }
 
@@ -347,8 +345,7 @@ bool Kitsune::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
     }
-    // event has been handled
-    // event->accept();
+    // event has not been handled
     return false;
 }
 
