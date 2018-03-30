@@ -29,7 +29,9 @@
 
 Kitsune::Kitsune(QWidget *parent) :
     QMainWindow(parent),
+    currentTab(0),
     tileData(new KitsuneTileData),      // helper class
+    zoomLevel(new QSpinBox(this)),      // zoom level widget
     ui(new Ui::KitsuneUi)
 {
     // set up UI. duh.
@@ -39,6 +41,22 @@ Kitsune::Kitsune(QWidget *parent) :
 
     connectActions();
 
+    // Add status tips to all actions
+    QList<QMenu*> menuList = ui->menuBar->findChildren<QMenu*>();
+    for(auto menu: menuList)
+    {
+        for(auto action: menu->actions())
+            action->setStatusTip(action->toolTip());
+    }
+
+    // Add zoom level widget to right side of status bar
+    zoomLevel->setRange(20, 400);
+    zoomLevel->setValue(100);
+    zoomLevel->setSuffix("%");
+    zoomLevel->setEnabled(false);
+    ui->statusBar->addPermanentWidget(this->zoomLevel, 0);
+
+    // TODO: restore last screen size
     resize(QGuiApplication::primaryScreen()->availableSize() * 3/5);
 }
 
@@ -93,7 +111,7 @@ void Kitsune::openImage()
     QString fileName;
     if(dialog.exec() == QDialog::Accepted)
     {
-        fileName = dialog.selectedFiles().first();
+        fileName = dialog.selectedFiles().first();      // get the file name
     }
     else
     {
@@ -110,11 +128,14 @@ void Kitsune::openImage()
                                 tabList.last()->getFileName());     // tab text is file name
         ui->imageTabs->setCurrentWidget(tabList.last());            // change focus to new tab
         ui->centralWidget->show();                                  // make tab widget visible
+        // update status bar, show message for 2000 ms
+        ui->statusBar->showMessage(tr("File loaded"), 2000);
     }
 
     // enable Export Palette and Export Tile Set menu entries
     ui->expPaletteAct->setEnabled(true);
     ui->expTileSetAct->setEnabled(true);
+    zoomLevel->setEnabled(true);
 }
 
 //------------------------------------------------------------------------------
@@ -139,8 +160,7 @@ void Kitsune::exportPalette()
     if(!tabList.isEmpty())       // sanity check for empty tab list
     {
         // Get the current tab's image and export its palette
-        KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
-        tileData->exportPalette(image->getImage().colorTable());
+        tileData->exportPalette(currentTab->getTabContent()->getImage().colorTable());
     }
 }
 
@@ -155,8 +175,7 @@ void Kitsune::exportTileSet()
     if(!tabList.isEmpty())       // check for empty tab list
     {
         // Get the current tab's image and export its tile set
-        KitsuneImage *image = tabList[ui->imageTabs->currentIndex()]->getTabContent();
-        tileData->exportTileSet(image->getImage());
+        tileData->exportTileSet(currentTab->getTabContent()->getImage());
     }
 }
 
@@ -190,8 +209,12 @@ void Kitsune::setBitFormat()
 void Kitsune::zoomReset()
 {
     // reset scale factor of current tab to 1.0
-    KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
-    currentTab->setScaleFactor(1.0);
+    // KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
+    // currentTab->setScaleFactor(1.0);
+    if(!tabList.isEmpty())   // sanity check
+    {
+        zoomLevel->setValue(100);
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -201,8 +224,14 @@ void Kitsune::zoomReset()
 void Kitsune::zoomIn()
 {
     // increase scale factor for current tab by 0.1
-    KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
-    currentTab->setScaleFactor(currentTab->getScaleFactor() + 0.1);
+    // KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
+    // currentTab->setScaleFactor(currentTab->getScaleFactor() + 0.1);
+    if(!tabList.isEmpty())   // sanity check
+    {
+        int zoom = currentTab->getScaleFactor() * 100;
+        zoom += 10;
+        zoomLevel->setValue(zoom);
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -213,8 +242,27 @@ void Kitsune::zoomOut()
 {
     // decrease scale factor for current tab by 0.1
     // tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
-    KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
-    currentTab->setScaleFactor(currentTab->getScaleFactor() - 0.1);
+    // KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
+    // currentTab->setScaleFactor(currentTab->getScaleFactor() - 0.1);
+    if(!tabList.isEmpty())   // sanity check
+    {
+        int zoom = currentTab->getScaleFactor() * 100;
+        zoom -= 10;
+        zoomLevel->setValue(zoom);
+    }
+}
+
+//------------------------------------------------------------------------------
+/*!
+ *  Displays information about the application in a dialog.
+ */
+void Kitsune::changeZoomLevel(int value)
+{
+    if(!tabList.isEmpty())
+    {
+        double factor = (value / 100.0);
+        currentTab->setScaleFactor(factor);
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -239,6 +287,17 @@ void Kitsune::about()
 
 //------------------------------------------------------------------------------
 /*!
+ *  Updates the pointer to the current tab. This pointer is used throughout the
+ *  class to operate on the currently selected tab.
+ */
+void Kitsune::changeCurrentTab(int index)
+{
+    currentTab = (index == -1)
+        ? 0 : tabList[index];
+}
+
+//------------------------------------------------------------------------------
+/*!
  *  Invoked whenever a tab is closed.
  */
 void Kitsune::closeTab(int tabIndex)
@@ -250,7 +309,39 @@ void Kitsune::closeTab(int tabIndex)
     {
         ui->expPaletteAct->setEnabled(false);
         ui->expTileSetAct->setEnabled(false);
+        zoomLevel->setEnabled(false);
+        // TODO: hide central widget?
     }
+    ui->statusBar->showMessage(tr("File closed"), 2000);
+}
+
+//------------------------------------------------------------------------------
+/*!
+ *  This method reacts to events concerning the mouse wheel. The tab's content
+ *  zooms in and out according to the mouse wheel input by the user.
+ *
+ *  \param event The QWheelEvent emitted by Qt
+ */
+void Kitsune::wheelEvent(QWheelEvent *event)
+{
+    // check if mouse wheel was turned
+    int numPixels = event->delta() / 8;
+    if(numPixels == 0)
+    {
+        // TODO: return statement superfluous?
+        event->accept();
+        return;
+    }
+
+    if(!tabList.isEmpty())   // sanity check
+    {
+        int zoom = currentTab->getScaleFactor() * 100;
+        zoom = (numPixels > 0)
+            ? zoom + 10 : zoom - 10;
+        zoomLevel->setValue(zoom);
+    }
+    // event has been handled
+    event->accept();
 }
 
 //------------------------------------------------------------------------------
@@ -277,5 +368,8 @@ void Kitsune::connectActions()
     connect(ui->aboutAct, &QAction::triggered, this, &Kitsune::about);
     connect(ui->aboutQtAct, &QAction::triggered, this, &QApplication::aboutQt);
     // Tab functions
+    connect(ui->imageTabs, &QTabWidget::currentChanged, this, &Kitsune::changeCurrentTab);
     connect(ui->imageTabs, &QTabWidget::tabCloseRequested, this, &Kitsune::closeTab);
+    // Zoom function
+    connect(zoomLevel, QOverload<int>::of(&QSpinBox::valueChanged), this, &Kitsune::changeZoomLevel);
 }

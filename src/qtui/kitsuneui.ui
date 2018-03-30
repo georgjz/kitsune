@@ -100,15 +100,24 @@
    <property name="text">
     <string>&amp;Open...</string>
    </property>
+   <property name="toolTip">
+    <string>Open a new file...</string>
+   </property>
   </action>
   <action name="exitAct">
    <property name="text">
     <string>E&amp;xit</string>
    </property>
+   <property name="toolTip">
+    <string>Exit Kitsune </string>
+   </property>
   </action>
   <action name="aboutAct">
    <property name="text">
     <string>&amp;About</string>
+   </property>
+   <property name="toolTip">
+    <string>Show details about Kitsune</string>
    </property>
   </action>
   <action name="aboutQtAct">
@@ -123,6 +132,9 @@
    <property name="text">
     <string>Save &amp;As... </string>
    </property>
+   <property name="toolTip">
+    <string>Save file as...</string>
+   </property>
   </action>
   <action name="expPaletteAct">
    <property name="enabled">
@@ -130,6 +142,9 @@
    </property>
    <property name="text">
     <string>Export &amp;Palette</string>
+   </property>
+   <property name="toolTip">
+    <string>Export palette data...</string>
    </property>
   </action>
   <action name="expTileSetAct">
@@ -139,6 +154,9 @@
    <property name="text">
     <string>Export Tile &amp;Set</string>
    </property>
+   <property name="toolTip">
+    <string>Export tile set data...</string>
+   </property>
   </action>
   <action name="_2bppAct">
    <property name="checkable">
@@ -146,6 +164,9 @@
    </property>
    <property name="text">
     <string>&amp;2 bpp</string>
+   </property>
+   <property name="toolTip">
+    <string>2 bits per pixel</string>
    </property>
   </action>
   <action name="_4bppAct">
@@ -157,6 +178,9 @@
    </property>
    <property name="text">
     <string>&amp;4 bpp</string>
+   </property>
+   <property name="toolTip">
+    <string>4 bits per pixel</string>
    </property>
   </action>
   <action name="zoomInAct">

@@ -29,6 +29,7 @@
 #include <QList>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QSpinBox>
 
 #include "KitsuneImage.hpp"
 #include "KitsuneTab.hpp"
@@ -71,15 +72,25 @@ private slots:
     void zoomOut();             //!< Zoom out
     // About Menu
     void about();               //!< Displays information about the application
+
     // tab functions
+    void changeCurrentTab(int index);   //!< Updates the pointer to the currently selected tab
     void closeTab(int tabIndex);        //!< Close the current tab
 
+    // Zoom function
+    void changeZoomLevel(int value);    //!< Invoked by signal tabList::valueChanged
+
+protected:
+    void wheelEvent(QWheelEvent *event) override;   //!< Changes the scale factor/zoom level
+
 private:
-    void connectActions();              //!< Connect actions to slots
+    void connectActions();              //!< Connect actions to slots and signals
 
     QList<KitsuneTab*> tabList;         //!< Holds all currently open tabs
+    KitsuneTab *currentTab;             //!< Points to the currently selected tab
     KitsuneTileData *tileData;          //!< Pointer to the helper class to export data
     Ui::KitsuneUi *ui;                  //!< Holds the Qt widgets of Kitsune
+    QSpinBox *zoomLevel;                //!< Displays the current zoom in the status bar
 };
 
 #endif /* KITSUNE_H */
