@@ -6,6 +6,7 @@
 * Status bar shows last operation's result
 * Controls
   * Zoom
+    * Fix zoom/scale factor inaccuracy
   * Pan/Scroll
 * Add support for exporting tile sets in additional Bit Formats
   * ~~2bpp~~

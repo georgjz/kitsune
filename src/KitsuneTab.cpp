@@ -19,6 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+
 #include <QGuiApplication>
 #include <QPixmap>
 #include <QPoint>
@@ -109,30 +110,36 @@ void KitsuneTab::scaleContent(double factor)
  *
  *  \param event The QWheelEvent emitted by Qt
  */
-bool KitsuneTab::eventFilter(QObject *obj, QEvent *event)
-{
-    // Eventfiler: handling done, return true
-    //              else, return false
-    // react to no event
-
-    // check if mouse wheel was turned
-    // if(event->type() == QEvent::Wheel)
-    // {
-    //     // check for Control and
-    //     return true;
-    // }
-    // check if mouse wheel was turned
-    if(event->type() == QEvent::Wheel)
-    {
-        // QWheelEvent *zoomEvent = static_cast<QWheelEvent*>(event);
-        // // Ctrl key is pressed
-        // if(zoomEvent->modifiers().testFlag(Qt::ControlModifier))
-        //     return false;
-
-        // ignore wheel events
-        event->ignore();
-    }
-}
+// bool KitsuneTab::eventFilter(QObject *obj, QEvent *event)
+// {
+//     // Eventfiler: handling done, return true
+//     //              else, return false
+//     // react to no event
+//
+//     // check if mouse wheel was turned
+//     // if(event->type() == QEvent::Wheel)
+//     // {
+//     //     // check for Control and
+//     //     return true;
+//     // }
+//
+//     // check if mouse wheel was turned
+//     if(event->type() == QEvent::Wheel)
+//     {
+//         // QWheelEvent *zoomEvent = static_cast<QWheelEvent*>(event);
+//         // // Ctrl key is pressed
+//         // if(zoomEvent->modifiers().testFlag(Qt::ControlModifier))
+//         // {
+//         //     event->ignore();
+//         //     // event->accept();
+//         //     // return true;
+//         // }
+//         // else
+//             // ignore wheel events
+//             // return false;
+//             // event->ignore();
+//     }
+// }
 
 //------------------------------------------------------------------------------
 /*!

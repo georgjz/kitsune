@@ -24,6 +24,7 @@
 #define KITSUNEIMAGE_H
 
 #include <QImage>
+// #include <QGraphicsView>
 #include <QLabel>
 
 #include "KitsuneTileData.hpp"
@@ -54,6 +55,9 @@ public:
     QImage getImage() { return image; }             //!< Returns the current image
     QString getFileName() { return fileName; }      //!< Returns the image file name
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;   //!< Method to react to Qt events
+    
 private:
     void setImage(const QImage &newImage);          //!< Sets the current image
 

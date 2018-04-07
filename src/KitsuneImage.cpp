@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QString>
+#include <QWheelEvent>
 
 #include <fstream>
 
@@ -98,6 +99,48 @@ bool KitsuneImage::saveFile(const QString &fileName)
     // TODO: status bar update
     // write to status bar
     return true;
+}
+
+//------------------------------------------------------------------------------
+/*!
+ *  This method reacts to events concerning the mouse wheel. It reacts depending
+ *  on the keys pressed.
+ *
+ *  \param event The QWheelEvent emitted by Qt
+ */
+bool KitsuneImage::eventFilter(QObject *obj, QEvent *event)
+{
+    // Eventfiler: handling done, return true
+    //              else, return false
+    // react to no event
+
+    // check if mouse wheel was turned
+    // if(event->type() == QEvent::Wheel)
+    // {
+    //     // check for Control and
+    //     return true;
+    // }
+
+    // check if mouse wheel was turned
+    if(event->type() == QEvent::Wheel)
+    {
+        QWheelEvent *zoomEvent = static_cast<QWheelEvent*>(event);
+        // Ctrl key is pressed
+        if(zoomEvent->modifiers().testFlag(Qt::ControlModifier))
+        {
+            event->ignore();
+            // event->accept();
+            // return true;
+        }
+        else
+        {
+            // get current scale factor
+            QVariant factor = parent()->property("scaleFactor");
+        }
+            // ignore wheel events
+            // return false;
+            // event->ignore();
+    }
 }
 
 //------------------------------------------------------------------------------
