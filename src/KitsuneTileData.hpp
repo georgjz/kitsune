@@ -4,6 +4,8 @@
 #include <QImage>
 #include <QVector>
 
+#include "rapidxml/rapidxml.hpp"
+
 // TODO: Move BitFormats and TileSizes to KitsuneTab.
 // TODO: Add SpriteSize enum class
 enum class BitFormats { _2bpp, _4bpp, _8bpp };

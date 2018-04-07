@@ -224,8 +224,6 @@ void Kitsune::zoomReset()
 void Kitsune::zoomIn()
 {
     // increase scale factor for current tab by 0.1
-    // KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
-    // currentTab->setScaleFactor(currentTab->getScaleFactor() + 0.1);
     if(!tabList.isEmpty())   // sanity check
     {
         int zoom = currentTab->getScaleFactor() * 100;
@@ -241,9 +239,6 @@ void Kitsune::zoomIn()
 void Kitsune::zoomOut()
 {
     // decrease scale factor for current tab by 0.1
-    // tabList[ui->imageTabs->currentIndex()]->scaleContent(1.0);
-    // KitsuneTab *currentTab = tabList[ui->imageTabs->currentIndex()];
-    // currentTab->setScaleFactor(currentTab->getScaleFactor() - 0.1);
     if(!tabList.isEmpty())   // sanity check
     {
         int zoom = currentTab->getScaleFactor() * 100;

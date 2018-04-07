@@ -103,30 +103,6 @@ void KitsuneTab::scaleContent(double factor)
 
 //------------------------------------------------------------------------------
 /*!
- *  This method reacts to events concerning the mouse wheel. The tab's content
- *  zooms in and out according to the mouse wheel input by the user.
- *
- *  \param event The QWheelEvent emitted by Qt
- */
-// void KitsuneTab::wheelEvent(QWheelEvent *event)
-// {
-//     // check if mouse wheel was turned
-//     int numPixels = event->delta() / 8;
-//     if(numPixels == 0)
-//     {
-//         event->accept();
-//         return;
-//     }
-//
-//     if(numPixels > 0) { setScaleFactor(scaleFactor + 0.1); }
-//     else              { setScaleFactor(scaleFactor - 0.1); }
-//
-//     // event has been handled
-//     event->accept();
-// }
-
-//------------------------------------------------------------------------------
-/*!
  *  Connects all the slots and signals of this class
  */
 void KitsuneTab::connectActions()

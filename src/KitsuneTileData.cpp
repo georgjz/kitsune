@@ -3,6 +3,7 @@
 #include <QString>
 
 #include "KitsuneTileData.hpp"
+#include "rapidxml/rapidxml.hpp"
 
 
 KitsuneTileData::KitsuneTileData() :
