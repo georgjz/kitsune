@@ -6,6 +6,7 @@
 * Status bar shows last operation's result
 * Controls
   * Zoom
+    * Fix zoom/scale factor inaccuracy
   * Pan/Scroll
 * Add support for exporting tile sets in additional Bit Formats
   * ~~2bpp~~
@@ -23,7 +24,8 @@
 * Status bar shows cursor positions/pixel coordinates and color value(24-bit and SNES BGR format)
 * Property window/editor
 * Better tab icons
-* Replace export functions with more robust dialog 
+* Replace export functions with more robust dialog
+* Fix C++11 errors/typecasts
 
 ## 0.5-Alpha
 * load TMX files

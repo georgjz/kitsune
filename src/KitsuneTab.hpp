@@ -43,7 +43,7 @@ class KitsuneTab : public QScrollArea
 {
     Q_OBJECT
     // If scaleFactor changes, emit signal to update content
-    Q_PROPERTY( double value READ getScaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged )
+    Q_PROPERTY( double factor READ getScaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged )
 
 public:
     explicit KitsuneTab(QWidget *parent = 0);               //!< Default constructor
