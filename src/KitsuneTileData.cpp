@@ -101,12 +101,20 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
             {
                 uint8_t bit = 0;
                 uint8_t index = image.colorTable().indexOf(image.pixel(8*xTile + x, 8*yTile + y));
+                // fix color index for 2bpp
+                if(bitFormat == BitFormats::_2bpp)
+                {
+                    index = index % 4;
+                }
+
                 bit = index & 1;
                 bitplane0 |= (bit << (7 - x));
 
                 index >>= 1;
                 bit = index & 1;
                 bitplane1 |= (bit << (7 - x));
+
+                if(bitFormat == BitFormats::_2bpp) continue;
 
                 index >>= 1;
                 bit = index & 1;
@@ -124,11 +132,22 @@ bool KitsuneTileData::exportTileSet(const QImage &image)
                     out << bitplane3;
                     outputFile.seek(offset*tile + (2*y + 16));
                     out << bitplane2;
-                case BitFormats::_2bpp:
                     outputFile.seek(offset*tile + 2*y + 1);
                     out << bitplane1;
                     outputFile.seek(offset*tile + 2*y);
                     out << bitplane0;
+                    break;
+                case BitFormats::_2bpp:
+                    outputFile.seek(offset*tile + y + 8);
+                    out << bitplane1;
+                    outputFile.seek(offset*tile + y);
+                    out << bitplane0;
+                    break;
+                    // INTERLACED USED IN GAME BOY, BUT NOT NES
+                    // outputFile.seek(offset*tile + 2*y + 1);
+                    // out << bitplane1;
+                    // outputFile.seek(offset*tile + 2*y);
+                    // out << bitplane0;
             }
             // reset bitplanes
             bitplane0 &= 0;
