@@ -1,4 +1,7 @@
+**Archived as of May 2022. I'm no longer actively working on this. My Qt as well as C++ skills were very cringe. Don't use this. Use [Aseprite](https://github.com/aseprite/aseprite/) instead, it's infinitely better than this nonsense here.**
+
 # Kitsune v0.2-prealpha
+
 This is a simple tool that will convert a pixel image file into
 the 2bpp, 4bpp or 8bpp bitplane format used by the SNES to display objects with
 corresponding palette data. Kitsune uses Qt.
